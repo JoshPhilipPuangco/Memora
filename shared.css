@@ -1,0 +1,588 @@
+/* ==========================================================================
+   MEMORA — SHARED STYLESHEET
+   Sitewide design system: colors, type, spacing, reset, and reusable
+   components. Classes here have no page prefix (e.g. .nav-bar, .btn-primary).
+   Page-specific stylesheets (e.g. home.css) layer on top of this file and
+   prefix their own classes with the page name (e.g. .home-hero).
+   ========================================================================== */
+
+
+/* --------------------------------------------------------------------------
+   1. ROOT VARIABLES
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* --- Colors --- */
+  --primary: #2E5AA8;
+  --accent: #D9A441;
+  --bg: #F1EFEA;
+  --surface: #FFFFFF;
+  --text: #22252A;
+
+  /* Derived shades, needed for hover/active/disabled states. Base colors
+     above are exact; these are simple darker/lighter steps off them. */
+  --primary-hover: #274B8F;   /* primary, one step darker */
+  --primary-active: #1F3D73;  /* primary, two steps darker */
+  --accent-hover: #C6922F;    /* accent, one step darker */
+  --accent-active: #B07F22;   /* accent, two steps darker */
+
+  --tint-blue-faint: #E4EBF6;   /* faint blue tint, secondary button hover */
+  --tint-blue-deeper: #C9D7EE;  /* deeper blue tint, secondary button active */
+
+  --border-grey: #D8D5CF;       /* thin border, cards / form fields */
+  --border-grey-dark: #ABA8A2;  /* form field border on hover */
+
+  --disabled-bg: #CBCBCB;
+  --disabled-text: #8A8A8A;
+  --disabled-border: #B0B0B0;
+
+  /* --- Type scale --- */
+  --font-size-heading: 24px;
+  --font-weight-heading: 700;
+
+  --font-size-body: 16px;
+  --font-weight-body: 400;
+
+  --font-size-small: 14px;
+  --font-weight-small: 400;
+
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+
+  /* --- Spacing, base unit 8px --- */
+  --space-unit: 8px;
+  --space-tight: 8px;      /* 1x, between closely related items */
+  --space-standard: 24px;  /* 3x, between sections or blocks */
+
+  /* Page edge padding: smaller below 768px, larger at 768px and up. */
+  --space-edge-mobile: 20px;
+  --space-edge-desktop: 56px;
+
+  /* Content width cap: keeps page content from stretching edge to edge on
+     wide screens. .page-container centers within this at 768px and up. */
+  --content-max-width: 1200px;
+
+  /* Corner radius */
+  --radius-sm: 6px;  /* buttons, tabs, form fields */
+  --radius-md: 8px;  /* cards, the flashcard, the card block */
+
+  /* --- Motion --- */
+  --transition-fast: 0.15s ease;
+}
+
+
+/* --------------------------------------------------------------------------
+   2. BASE / RESET
+   -------------------------------------------------------------------------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+}
+
+h1, h2, .heading {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-heading);
+  color: var(--text);
+  margin: 0;
+}
+
+small, .text-small {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-small);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Visible focus ring, kept on every element. Never remove this. */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Respect "reduce motion" OS setting: every transition/animation on the
+   site collapses to effectively instant instead of forcing motion on
+   people who've asked their device not to. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* --------------------------------------------------------------------------
+   3. PAGE CONTAINER (edge padding)
+   -------------------------------------------------------------------------- */
+
+.page-container {
+  flex: 1 0 auto;
+  padding-left: var(--space-edge-mobile);
+  padding-right: var(--space-edge-mobile);
+}
+
+
+/* --------------------------------------------------------------------------
+   4. COMPONENTS
+   -------------------------------------------------------------------------- */
+
+/* --- Nav bar --- */
+/* Logged out: Home, Log In / Sign Up — logo only.
+   Logged in: My Decks, Create Deck, Study Mode — logo + account link. */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-grey);
+  padding: var(--space-tight) var(--space-edge-mobile);
+}
+
+.nav-bar__logo {
+  font-size: var(--font-size-heading);
+  font-weight: var(--font-weight-heading);
+  color: var(--text);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.nav-bar__logo:hover {
+  color: var(--primary);
+}
+
+.nav-bar__logo:active {
+  color: var(--primary-active);
+}
+
+.nav-bar__account-link {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  color: var(--text);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.nav-bar__account-link:hover {
+  color: var(--primary);
+}
+
+.nav-bar__account-link:active {
+  color: var(--primary-active);
+}
+/* No disabled state: logged-out pages simply omit the account link. */
+
+
+/* --- Primary button --- */
+/* Home (Sign Up), Log In / Sign Up (Log In submit), Create Deck (Save deck) */
+.btn-primary {
+  display: inline-block;
+  background: var(--primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  font-family: var(--font-family);
+  padding: var(--space-tight) var(--space-standard);
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-primary:active {
+  background: var(--primary-active);
+}
+
+.btn-primary:disabled {
+  background: var(--disabled-bg);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+
+/* --- Secondary button, text only --- */
+/* Home (Log In), Create Deck (Add another card), Study Mode (Back to My
+   Decks), Log In / Sign Up (Back to Home) */
+.btn-secondary {
+  display: inline-block;
+  background: var(--surface);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  font-family: var(--font-family);
+  padding: var(--space-tight) var(--space-standard);
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-secondary:hover {
+  background: var(--tint-blue-faint);
+}
+
+.btn-secondary:active {
+  background: var(--tint-blue-deeper);
+}
+
+.btn-secondary:disabled {
+  border-color: var(--disabled-border);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+/* --- Secondary button, icon plus text --- */
+/* Study Mode: Mark Reviewed, Mark Not Yet Reviewed, Previous card, Next card */
+.btn-secondary-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-tight);
+  background: var(--surface);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  font-family: var(--font-family);
+  padding: var(--space-tight) var(--space-standard);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-secondary-icon svg,
+.btn-secondary-icon img {
+  width: 16px;
+  height: 16px;
+}
+
+.btn-secondary-icon:hover {
+  background: var(--tint-blue-faint);
+}
+
+.btn-secondary-icon:active {
+  background: var(--tint-blue-deeper);
+}
+
+.btn-secondary-icon:disabled {
+  border-color: var(--disabled-border);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+
+/* --- Accent button --- */
+/* My Decks (Create new deck) only. One accent button, sitewide. */
+.btn-accent {
+  display: inline-block;
+  background: var(--accent);
+  color: var(--text);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  font-family: var(--font-family);
+  padding: var(--space-tight) var(--space-standard);
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: background-color var(--transition-fast);
+}
+
+.btn-accent:hover {
+  background: var(--accent-hover);
+}
+
+.btn-accent:active {
+  background: var(--accent-active);
+}
+/* No disabled state: not expected in current wireframes. */
+
+
+/* --- Tab switcher --- */
+/* Log In / Sign Up page. Stays side by side at every screen size. */
+.tab-switcher {
+  display: flex;
+  gap: var(--space-tight);
+}
+
+.tab {
+  padding: var(--space-tight) var(--space-standard);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--primary);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  font-family: var(--font-family);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.tab:hover {
+  background: var(--tint-blue-faint);
+}
+
+/* Selected tab: filled dark, white text (this is the "active" result of
+   clicking a tab). */
+.tab.is-selected {
+  background: var(--text);
+  border-color: var(--text);
+  color: #FFFFFF;
+}
+/* Not applicable: no disabled state for tabs. */
+
+
+/* --- Deck card --- */
+/* My Decks page. Whole box is clickable. */
+.deck-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--border-grey);
+  border-radius: var(--radius-md);
+  padding: var(--space-standard);
+  cursor: pointer;
+  box-shadow: none;
+  text-decoration: none;
+  color: inherit;
+  transition: box-shadow var(--transition-fast);
+}
+
+.deck-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.deck-card:active {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.deck-card__title {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  color: var(--text);
+}
+
+.deck-card__progress {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-small);
+  color: var(--text);
+}
+/* Not used: every deck shown is clickable, so no disabled state. */
+
+
+/* --- Flashcard --- */
+/* Study Mode. Tap or click to flip between question and answer. */
+.flashcard {
+  position: relative;
+  display: block;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-standard);
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  transition: box-shadow var(--transition-fast);
+}
+
+.flashcard:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.14);
+}
+
+.flashcard:active {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.flashcard__flip-icon {
+  position: absolute;
+  top: var(--space-tight);
+  right: var(--space-tight);
+  width: 20px;
+  height: 20px;
+}
+
+.flashcard__question,
+.flashcard__answer {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  color: var(--text);
+}
+
+/* Flipped state instead of a disabled state. */
+.flashcard:not(.is-flipped) .flashcard__answer {
+  display: none;
+}
+
+.flashcard.is-flipped .flashcard__question {
+  display: none;
+}
+
+
+/* --- Form field --- */
+/* Log In / Sign Up (Email, Password); Create Deck (Deck title, Question,
+   Answer). Each repeating Question/Answer pair gets its own label pair. */
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
+}
+
+.form-field label {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  color: var(--text);
+}
+
+.form-field input,
+.form-field textarea {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  font-family: var(--font-family);
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border-grey);
+  border-radius: var(--radius-sm);
+  padding: var(--space-tight);
+  transition: border-color var(--transition-fast);
+}
+
+.form-field input:hover,
+.form-field textarea:hover {
+  border-color: var(--border-grey-dark);
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--primary);
+}
+
+.form-field input:disabled,
+.form-field textarea:disabled {
+  background: var(--disabled-bg);
+  color: var(--disabled-text);
+  cursor: not-allowed;
+}
+
+/* Helper text: Create Deck's field helper text, Study Mode's progress
+   line (total cards, reviewed, not yet reviewed). */
+.helper-text {
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-small);
+  color: var(--text);
+}
+
+/* Card block: one repeating Question/Answer pair on Create Deck. */
+.card-block {
+  border: 1px solid var(--border-grey);
+  border-radius: var(--radius-md);
+  padding: var(--space-standard);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
+  margin-bottom: var(--space-standard);
+}
+
+
+/* --- Footer --- */
+/* All 5 pages. Static text, top border only. */
+.footer {
+  border-top: 1px solid var(--border-grey);
+  padding: var(--space-tight) var(--space-edge-mobile);
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-small);
+  color: var(--text);
+  text-align: center;
+}
+
+.footer a {
+  color: var(--text);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer a:hover {
+  color: var(--primary);
+}
+
+.footer a:active {
+  color: var(--primary-active);
+}
+/* Not applicable: footer text is static, no disabled state. */
+
+
+/* --- Button pair --- */
+/* Stacks full width on phone, sits side by side on desktop. Used for:
+   Log In / Sign Up (Home), Add another card / Save deck (Create Deck),
+   Mark Reviewed / Mark Not Yet Reviewed (Study Mode),
+   Previous card / Next card (Study Mode). */
+.button-pair {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
+}
+
+.button-pair > * {
+  width: 100%;
+}
+
+
+/* --------------------------------------------------------------------------
+   5. BREAKPOINT
+   One breakpoint, mobile-first: min-width: 768px
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 768px) {
+  /* Page content sits in a centered block with empty space on the sides,
+     larger edge padding (about 40 to 70px). */
+  .page-container {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding-left: var(--space-edge-desktop);
+    padding-right: var(--space-edge-desktop);
+  }
+
+  .nav-bar,
+  .footer {
+    padding-left: var(--space-edge-desktop);
+    padding-right: var(--space-edge-desktop);
+  }
+
+  /* Button pairs sit side by side, each button its natural width. */
+  .button-pair {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--space-standard);
+  }
+
+  .button-pair > * {
+    width: auto;
+  }
+
+  /* Nav bar, deck cards, and the flashcard keep the same single-column
+     shape at both sizes; only their edge padding changes, handled above
+     and through .page-container. */
+}

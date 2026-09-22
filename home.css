@@ -1,0 +1,48 @@
+/* ==========================================================================
+   MEMORA — HOME PAGE
+   Page-specific rules only. Classes are prefixed .home-* so they never
+   collide with shared.css or another page's stylesheet.
+   ========================================================================== */
+
+.home-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.home-hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  text-align: center;
+  gap: var(--space-standard);
+  padding-top: var(--space-standard);
+  padding-bottom: var(--space-standard);
+}
+
+.home-hero__title {
+  font-size: 36px;
+}
+
+.home-hero__intro {
+  font-size: 18px;
+  color: var(--text);
+}
+
+@media (min-width: 768px) {
+  .home-hero {
+    align-items: center;
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .home-hero__title {
+    font-size: 64px;
+  }
+
+  .home-hero__intro {
+    max-width: 60ch;
+    font-size: 22px;
+  }
+}
