@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!--head -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Memora - Create Deck</title>
+        <link rel="stylesheet" href="shared.css">
+        <link rel="stylesheet" href="create-deck.css">
+        <script src="create-deck.js" defer></script>
+    </head>
+    
+<!--body -->
+    <body>
+            <header class="nav-bar">
+            <a href="index.html" class="nav-bar__logo">Memora</a>
+            <a href="#" class="nav-bar__account-link">Account</a>
+            </header>
+
+        <main class="page-container">
+
+        <h1 class="create-deck-title">Create a New Deck</h1>
+       
+<!--forms -->
+        <form class="create-deck-form">  
+            <div class="form-field">
+                <label for="deck-title">Deck Title</label>
+
+                <input 
+                type="text" 
+                id="deck-title" 
+                name="deck-title"
+                placeholder="Enter deck title" required> 
+
+            </div>
+
+    <!--the card area -->
+    <div id="card-container">
+            <div class="card-block">
+       
+        <!--card question -->
+        <div class="form-field">
+            <label for="question-1">Question</label>
+            <textarea
+                id="question-1"
+                name="question-1"
+                placeholder="Enter your question"
+                required
+            ></textarea>
+        </div>
+
+        <!--card answer -->
+        <div class="form-field">
+            <label for="answer-1">Answer</label>
+            <textarea
+                id="answer-1"
+                name="answer-1"
+                placeholder="Enter your answer"
+                required
+            ></textarea>
+        </div>
+
+    </div>
+
+    <!--buttonss -->
+            <div class="button-pair">
+                <button type="button" class="btn-secondary" id="add-card">Add another card</button> 
+                <button type="submit" class="btn-primary">Create Deck</button>
+                <button type="button" class="btn-secondary" id="cancel-deck">Cancel</button> 
+            </div>
+        </form>
+        </main>
+    <footer class="footer"><p>© 2026 Memora</p></footer>
+    </body>
+</html>    

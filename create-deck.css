@@ -1,0 +1,16 @@
+.create-deck-title {
+    text-align: center;
+}
+
+
+.create-deck-form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.create-deck-form textarea{
+    min-height: 100px;
+    resize: vertical;
+}
