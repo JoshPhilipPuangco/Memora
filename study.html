@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memora — Study Mode</title>
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="stylesheet" href="study.css" />
+</head>
+<body>
+  <header class="nav-bar">
+    <a class="nav-bar__logo" href="mydecks.html">Memora</a>
+    <a class="nav-bar__account-link" href="#">Account / Log Out</a>
+  </header>
+
+  <main class="page-container study-main">
+    <a class="btn-secondary study-back" href="mydecks.html">&larr; Back to My Decks</a>
+
+    <div class="study-header">
+      <h1 class="study-header__title" id="deckTitle">Deck title</h1>
+      <p class="helper-text" id="progressText">
+        Progress: 0 total, 0 reviewed, 0 not yet reviewed
+      </p>
+    </div>
+
+    <div class="flashcard" id="flashcard" tabindex="0" role="button"
+         aria-label="Flashcard, click or press Enter to flip">
+      <svg class="flashcard__flip-icon" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M17 2.1l4 4-4 4" />
+        <path d="M3 12.1v-2a4 4 0 0 1 4-4h14" />
+        <path d="M7 21.9l-4-4 4-4" />
+        <path d="M21 11.9v2a4 4 0 0 1-4 4H3" />
+      </svg>
+      <p class="flashcard__question" id="cardQuestion">Question goes here</p>
+      <p class="flashcard__answer" id="cardAnswer">Answer goes here</p>
+    </div>
+
+    <div class="button-pair study-mark-row">
+      <button class="btn-secondary-icon" id="markReviewedBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+        Mark Reviewed
+      </button>
+      <button class="btn-secondary-icon" id="markNotReviewedBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M6 18L18 6M6 6l12 12" />
+        </svg>
+        Mark Not Yet Reviewed
+      </button>
+    </div>
+
+    <div class="button-pair study-nav-row">
+      <button class="btn-secondary-icon" id="prevBtn" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M15 18l-6-6 6-6" />
+        </svg>
+        Previous card
+      </button>
+      <button class="btn-secondary-icon" id="nextBtn" type="button">
+        Next card
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M9 18l6-6-6-6" />
+        </svg>
+      </button>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Memora</p>
+  </footer>
+
+  <script>
+    // Sample deck data — replace with real deck data once wired to storage/backend.
+    const deck = {
+      title: "Integral Calculus — Formulas",
+      cards: [
+        { question: "What is the power rule for integration?", answer: "∫xⁿ dx = xⁿ⁺¹⁄(n+1) + C, for n ≠ -1", reviewed: false },
+        { question: "What is ∫1/x dx?", answer: "ln|x| + C", reviewed: false },
+        { question: "What is ∫eˣ dx?", answer: "eˣ + C", reviewed: true },
+        { question: "What is ∫cos(x) dx?", answer: "sin(x) + C", reviewed: false },
+        { question: "What is ∫sin(x) dx?", answer: "-cos(x) + C", reviewed: false },
+      ],
+    };
+
+    let currentIndex = 0;
+    let isFlipped = false;
+
+    const flashcard = document.getElementById("flashcard");
+    const cardQuestion = document.getElementById("cardQuestion");
+    const cardAnswer = document.getElementById("cardAnswer");
+    const deckTitle = document.getElementById("deckTitle");
+    const progressText = document.getElementById("progressText");
+    const markReviewedBtn = document.getElementById("markReviewedBtn");
+    const markNotReviewedBtn = document.getElementById("markNotReviewedBtn");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+
+    function renderCard() {
+      const card = deck.cards[currentIndex];
+      cardQuestion.textContent = card.question;
+      cardAnswer.textContent = card.answer;
+      isFlipped = false;
+      flashcard.classList.remove("is-flipped");
+      updateMarkButtons();
+      updateNavButtons();
+    }
+
+    function updateProgress() {
+      const total = deck.cards.length;
+      const reviewed = deck.cards.filter((c) => c.reviewed).length;
+      const notReviewed = total - reviewed;
+      deckTitle.textContent = deck.title;
+      progressText.textContent =
+        `Progress: ${total} total, ${reviewed} reviewed, ${notReviewed} not yet reviewed`;
+    }
+
+    function updateMarkButtons() {
+      const card = deck.cards[currentIndex];
+      markReviewedBtn.setAttribute("aria-pressed", card.reviewed ? "true" : "false");
+      markNotReviewedBtn.setAttribute("aria-pressed", card.reviewed ? "false" : "true");
+    }
+
+    function updateNavButtons() {
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === deck.cards.length - 1;
+    }
+
+    function flipCard() {
+      isFlipped = !isFlipped;
+      flashcard.classList.toggle("is-flipped", isFlipped);
+    }
+
+    flashcard.addEventListener("click", flipCard);
+    flashcard.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        flipCard();
+      }
+    });
+
+    markReviewedBtn.addEventListener("click", () => {
+      deck.cards[currentIndex].reviewed = true;
+      updateProgress();
+      updateMarkButtons();
+    });
+
+    markNotReviewedBtn.addEventListener("click", () => {
+      deck.cards[currentIndex].reviewed = false;
+      updateProgress();
+      updateMarkButtons();
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderCard();
+      }
+    });
+
+    nextBtn.addEventListener("click", () => {
+      if (currentIndex < deck.cards.length - 1) {
+        currentIndex++;
+        renderCard();
+      }
+    });
+
+    updateProgress();
+    renderCard();
+  </script>
+</body>
+</html>
