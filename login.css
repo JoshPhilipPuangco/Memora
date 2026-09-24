@@ -1,0 +1,110 @@
+/* ==========================================================================
+   MEMORA — LOGIN / SIGNUP PAGE
+   Page-specific rules only. Classes are prefixed .login-* so they never
+   collide with shared.css or another page's stylesheet.
+   ========================================================================== */
+
+/* Anchored from the top (not centered) at every width: centering via
+   justify-content made the card's top edge — and so the tab switcher —
+   shift depending on which panel's height was active, since Sign Up
+   has an extra field and is taller than Log In. A fixed top offset
+   keeps the tabs in place; any height difference between panels just
+   changes the space below the card instead. */
+.login-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-standard);
+  width: 100%;
+  padding-top: var(--space-standard);
+  padding-bottom: var(--space-standard);
+}
+
+.login-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-standard);
+}
+
+/* Sign Up's fields each carry a helper-text line now, so its blocks read
+   as more crowded than Log In's at the same gap. Extra room scoped to
+   this form only — Log In stays at the shared default. */
+#signup-form.login-panel {
+  gap: 32px;
+}
+
+/* .login-panel's own `display: flex` would otherwise override the
+   browser's default `[hidden] { display: none }` rule (same
+   specificity, author styles win) and show both forms at once. */
+.login-panel[hidden] {
+  display: none;
+}
+
+/* Wireframe calls for the two tabs touching, equal width — .tab-switcher's
+   shared default (a small gap, natural width) stays as-is for any other
+   future consumer, so the fix is scoped to this page only. */
+.login-card .tab-switcher {
+  gap: 0;
+}
+
+.login-card .tab {
+  flex: 1;
+  white-space: nowrap;
+}
+
+/* Touching tabs read as one box: square off the inner corners and drop
+   the doubled border where they meet. */
+.login-card .tab-switcher .tab:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+.login-card .tab-switcher .tab:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+/* Touch-sized targets on small screens, per the mobile wireframe. */
+.login-card .tab {
+  min-height: 70px;
+}
+
+.login-panel button[type="submit"] {
+  width: 100%;
+  min-height: 64px;
+}
+
+.login-card > .btn-secondary {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  border-color: var(--border-grey);
+}
+
+@media (min-width: 768px) {
+  .login-card {
+    max-width: 420px;
+    margin: 0 auto;
+    padding-top: 72px;
+  }
+
+  .login-card .tab {
+    min-height: 48px;
+  }
+
+  .login-panel button[type="submit"] {
+    min-height: 48px;
+  }
+
+  .login-card > .btn-secondary {
+    min-height: auto;
+  }
+}
