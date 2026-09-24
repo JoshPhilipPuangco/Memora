@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log In / Sign Up — Memora</title>
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="stylesheet" href="login.css" />
+  <script src="login.js" defer></script>
+</head>
+<body>
+  <header class="nav-bar">
+    <a class="nav-bar__logo" href="index.html">Memora</a>
+  </header>
+
+  <main class="page-container login-main">
+    <div class="login-card">
+      <div class="tab-switcher">
+        <button type="button" class="tab is-selected" id="tab-login" data-tab="login">Log In</button>
+        <button type="button" class="tab" id="tab-signup" data-tab="signup">Sign Up</button>
+      </div>
+
+      <form class="login-panel" id="login-form" data-panel="login" novalidate>
+        <p class="required-note">Fields with <span class="required-mark">*</span> are required.</p>
+        <div class="form-field">
+          <label for="login-email">Email <span class="required-mark">*</span></label>
+          <input type="email" id="login-email" name="email" required />
+        </div>
+        <div class="form-field">
+          <label for="login-password">Password <span class="required-mark">*</span></label>
+          <input type="password" id="login-password" name="password" required />
+        </div>
+        <p class="form-error" id="login-error"></p>
+        <button type="submit" class="btn-primary">Log In</button>
+      </form>
+
+      <form class="login-panel" id="signup-form" data-panel="signup" hidden novalidate>
+        <p class="required-note">Fields with <span class="required-mark">*</span> are required.</p>
+        <div class="form-field">
+          <label for="signup-username">Username <span class="required-mark">*</span></label>
+          <input type="text" id="signup-username" name="username" required />
+          <p class="helper-text">At least 6 characters. Letters, numbers, and underscores only.</p>
+        </div>
+        <div class="form-field">
+          <label for="signup-email">Email <span class="required-mark">*</span></label>
+          <input type="email" id="signup-email" name="email" required />
+          <p class="helper-text">e.g. name@example.com</p>
+        </div>
+        <div class="form-field">
+          <label for="signup-password">Password <span class="required-mark">*</span></label>
+          <input type="password" id="signup-password" name="password" required />
+          <p class="helper-text">At least 6 characters.</p>
+        </div>
+        <p class="form-error" id="signup-error"></p>
+        <button type="submit" class="btn-primary">Sign Up</button>
+      </form>
+
+      <a class="btn-secondary" href="index.html">Back to Home</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Memora</p>
+  </footer>
+</body>
+</html>

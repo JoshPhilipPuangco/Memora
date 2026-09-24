@@ -25,6 +25,7 @@
   --primary-active: #1F3D73;  /* primary, two steps darker */
   --accent-hover: #C6922F;    /* accent, one step darker */
   --accent-active: #B07F22;   /* accent, two steps darker */
+  --text-muted: #6E7175;      /* text, lighter gray — helper/instructional text under a field */
 
   --tint-blue-faint: #E4EBF6;   /* faint blue tint, secondary button hover */
   --tint-blue-deeper: #C9D7EE;  /* deeper blue tint, secondary button active */
@@ -35,6 +36,8 @@
   --disabled-bg: #CBCBCB;
   --disabled-text: #8A8A8A;
   --disabled-border: #B0B0B0;
+
+  --error: #B3453D;  /* inline validation/error messages, Log In / Sign Up */
 
   /* --- Type scale --- */
   --font-size-heading: 24px;
@@ -457,6 +460,26 @@ img {
   color: var(--text);
 }
 
+/* Marks a field's label as required, e.g. `<label>Email <span
+   class="required-mark">*</span></label>`. */
+.required-mark {
+  color: var(--error);
+}
+
+/* One legend for a form where every field is required (Log In / Sign Up):
+   states the asterisk's meaning once, up top, instead of repeating it on
+   every label. Place as the form's first child, e.g. `<p class=
+   "required-note">Fields with <span class="required-mark">*</span> are
+   required.</p>`. Same color as a field label, not muted: this is the
+   text that explains the labels' own asterisks, so it reads as part of
+   that same group rather than secondary helper text. */
+.required-note {
+  margin: 0;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-small);
+  color: var(--text);
+}
+
 .form-field input,
 .form-field textarea {
   font-size: var(--font-size-body);
@@ -487,12 +510,35 @@ img {
   cursor: not-allowed;
 }
 
-/* Helper text: Create Deck's field helper text, Study Mode's progress
-   line (total cards, reviewed, not yet reviewed). */
-.helper-text {
+/* --- Form error --- */
+/* Log In / Sign Up (validation, duplicate account, login failure).
+   Always present (never `hidden`) and given a minimum height so the
+   space is reserved up front — a message appearing doesn't push the
+   buttons below it further down the page. Sized for two lines: the
+   username rule's message is long enough to wrap, and everything
+   shorter just sits centered inside the same reserved space. */
+.form-error {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  text-align: center;
   font-size: var(--font-size-small);
   font-weight: var(--font-weight-small);
-  color: var(--text);
+  color: var(--error);
+}
+
+/* Helper text: Log In / Sign Up's field guidance, Create Deck's field
+   helper text, Study Mode's progress line (total cards, reviewed, not
+   yet reviewed). Margin reset to 0: as a <p> nested in .form-field's
+   flex column, the browser's default paragraph margin would add extra
+   space on top of .form-field's own `gap`, doubling up the spacing. */
+.helper-text {
+  margin: 0;
+  font-size: var(--font-size-small);
+  font-weight: var(--font-weight-small);
+  color: var(--text-muted);
 }
 
 /* Card block: one repeating Question/Answer pair on Create Deck. */
@@ -559,6 +605,14 @@ img {
   /* Page content sits in a centered block with empty space on the sides,
      larger edge padding (about 40 to 70px). */
   .page-container {
+    /* .page-container is a flex item of body (column direction), so its
+       cross-axis (width) size is "auto" by default. Auto margins on a
+       flex item suppress the usual stretch-to-fill behavior, so without
+       an explicit width this box would shrink-to-fit its content instead
+       of filling up to max-width — on pages whose content width can
+       change (e.g. a validation message getting longer), that made the
+       whole centered column visibly grow and shrink with the content. */
+    width: 100%;
     max-width: var(--content-max-width);
     margin: 0 auto;
     padding-left: var(--space-edge-desktop);
