@@ -1,3 +1,7 @@
+/* my-decks.css — styles ONLY for my-decks.html
+   All classes here use the "mydecks-" prefix per team convention.
+   Do not edit shared.css from this file. */
+
 .mydecks-main {
   padding: 2rem 1.5rem;
 }
