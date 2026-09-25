@@ -1,0 +1,132 @@
+/* my-decks.css — styles ONLY for my-decks.html
+   All classes here use the "mydecks-" prefix per team convention.
+   Do not edit shared.css from this file. */
+
+.mydecks-main {
+  padding: 2rem 1.5rem;
+}
+
+.mydecks-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.mydecks-title {
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.mydecks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.mydecks-card {
+  border: 1px solid #e2e2e2;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mydecks-card__title {
+  margin: 0;
+  font-size: 1.1rem;
+  word-break: break-word;
+}
+
+.mydecks-card__meta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.mydecks-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mydecks-card__delete {
+  background: none;
+  border: 1px solid #e2e2e2;
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  color: #b3261e;
+  cursor: pointer;
+}
+
+.mydecks-card__delete:hover {
+  background: #fdeceb;
+}
+
+.mydecks-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+}
+
+.mydecks-empty__text {
+  margin-bottom: 1rem;
+  color: #666;
+}
+
+/* Modal */
+.mydecks-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.mydecks-modal-overlay[hidden] {
+  display: none;
+}
+
+.mydecks-modal {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  width: 90%;
+  max-width: 360px;
+}
+
+.mydecks-modal__title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+}
+
+.mydecks-modal__label {
+  display: block;
+  font-size: 0.85rem;
+  margin-bottom: 0.35rem;
+}
+
+.mydecks-modal__input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.mydecks-modal__error {
+  color: #b3261e;
+  font-size: 0.85rem;
+  margin: 0.4rem 0 0;
+}
+
+.mydecks-modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
