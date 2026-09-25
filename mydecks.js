@@ -1,8 +1,3 @@
-// my-decks.js — logic ONLY for my-decks.html
-// Decks are stored in localStorage for now (no backend yet).
-// Swap `loadDecks` / `saveDecks` for real API calls once one exists —
-// everything else (rendering, modal, events) stays the same.
-
 (function () {
   const STORAGE_KEY = "memora_decks";
 
