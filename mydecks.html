@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Decks — Memora</title>
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="stylesheet" href="mydecks.css" />
+</head>
+<body>
+
+  <header class="nav-bar">
+    <a class="nav-bar__logo" href="index.html">Memora</a>
+    <nav class="nav-bar__links">
+      <a href="my-decks.html">My Decks</a>
+      <a href="login.html">Log Out</a>
+    </nav>
+  </header>
+
+  <main class="page-container mydecks-main">
+
+    <section class="mydecks-header">
+      <h1 class="mydecks-title">My Decks</h1>
+      <button class="btn-primary mydecks-create-btn" id="mydecksCreateBtn">
+        + Create Deck
+      </button>
+    </section>
+
+    <!-- Filled in by mydecks.js. Hidden when there are zero decks. -->
+    <section class="mydecks-grid" id="mydecksGrid"></section>
+
+    <!-- Shown by mydecks.js instead of the grid when there are zero decks -->
+    <section class="mydecks-empty" id="mydecksEmpty" hidden>
+      <p class="mydecks-empty__text">
+        You don't have any decks yet. Create your first one to start studying.
+      </p>
+      <button class="btn-primary" id="mydecksEmptyCreateBtn">+ Create Deck</button>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>&copy; 2026 Memora</p>
+  </footer>
+
+  <!-- Create / edit deck modal -->
+  <div class="mydecks-modal-overlay" id="mydecksModalOverlay" hidden>
+    <div class="mydecks-modal" role="dialog" aria-modal="true" aria-labelledby="mydecksModalTitle">
+      <h2 class="mydecks-modal__title" id="mydecksModalTitle">Create Deck</h2>
+      <label class="mydecks-modal__label" for="mydecksModalInput">Deck name</label>
+      <input
+        class="mydecks-modal__input"
+        id="mydecksModalInput"
+        type="text"
+        maxlength="60"
+        placeholder="e.g. Biology 101"
+      />
+      <p class="mydecks-modal__error" id="mydecksModalError" hidden>Please enter a deck name.</p>
+      <div class="mydecks-modal__actions">
+        <button class="btn-secondary" id="mydecksModalCancel">Cancel</button>
+        <button class="btn-primary" id="mydecksModalSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="shared.js"></script>
+  <script src="mydecks.js"></script>
+</body>
+</html>
