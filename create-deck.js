@@ -51,7 +51,7 @@ cancelButton.addEventListener("click", function() {
 // SuBMIT
 createDeckForm.addEventListener("submit", function(event) {
     event.preventDefault();
-
+    window.location.href = "my-decks.html";
 });
 
 // ReMOVE

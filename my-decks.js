@@ -9,8 +9,6 @@
   // ---- DOM refs ----
   const grid = document.getElementById("mydecksGrid");
   const emptyState = document.getElementById("mydecksEmpty");
-  const createBtn = document.getElementById("mydecksCreateBtn");
-  const emptyCreateBtn = document.getElementById("mydecksEmptyCreateBtn");
 
   const modalOverlay = document.getElementById("mydecksModalOverlay");
   const modalTitle = document.getElementById("mydecksModalTitle");
@@ -181,8 +179,6 @@
   }
 
   // ---- Events ----
-  createBtn.addEventListener("click", () => openModal("create"));
-  emptyCreateBtn.addEventListener("click", () => openModal("create"));
   modalCancel.addEventListener("click", closeModal);
   modalSave.addEventListener("click", handleModalSave);
 
