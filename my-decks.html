@@ -10,10 +10,10 @@
 <body>
 
   <header class="nav-bar">
-    <a class="nav-bar__logo" href="index.html">Memora</a>
+    <a class="nav-bar__logo" href="my-decks.html">Memora</a>
     <nav class="nav-bar__links">
       <a href="my-decks.html">My Decks</a>
-      <a href="login.html">Log Out</a>
+      <a href="index.html">Log Out</a>
     </nav>
   </header>
 
@@ -21,9 +21,9 @@
 
     <section class="mydecks-header">
       <h1 class="mydecks-title">My Decks</h1>
-      <button class="btn-primary mydecks-create-btn" id="mydecksCreateBtn">
+      <a class="btn-primary mydecks-create-btn" id="mydecksCreateBtn" href="create-deck.html">
         + Create Deck
-      </button>
+      </a>
     </section>
 
     <!-- Filled in by my-decks.js. Hidden when there are zero decks. -->
@@ -34,7 +34,7 @@
       <p class="mydecks-empty__text">
         You don't have any decks yet. Create your first one to start studying.
       </p>
-      <button class="btn-primary" id="mydecksEmptyCreateBtn">+ Create Deck</button>
+      <a class="btn-primary" id="mydecksEmptyCreateBtn" href="create-deck.html">+ Create Deck</a>
     </section>
 
   </main>
