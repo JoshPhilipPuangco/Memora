@@ -89,7 +89,7 @@
 
       const studyLink = document.createElement("a");
       studyLink.className = "btn-primary mydecks-card__study";
-      studyLink.href = `study.html?deck=${encodeURIComponent(deck.id)}`;
+      studyLink.href = `study-decks.html?deck=${encodeURIComponent(deck.id)}`;
       studyLink.textContent = "Study";
 
       const editBtn = document.createElement("button");
