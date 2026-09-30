@@ -1,6 +1,6 @@
 # Weekly Increment Report
 
-## Week of: September 17-25, 2026
+## Week of: September 26-30, 2026
 
 ### Links to Each Group Member’s Increment Report
 
