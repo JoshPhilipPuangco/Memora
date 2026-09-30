@@ -75,3 +75,20 @@
     font-size: 22px;
   }
 }
+
+/* Empty / error message shown when there is no deck or no cards. */
+.study-message {
+  width: 100%;
+  max-width: 900px;
+  background: var(--surface);
+  border: 1px solid var(--border-grey);
+  border-radius: var(--radius-md);
+  padding: var(--space-standard);
+  text-align: center;
+}
+
+/* Several study-* blocks set display:flex, which would otherwise override
+   the browser's default [hidden] rule. */
+.study-main [hidden] {
+  display: none;
+}
