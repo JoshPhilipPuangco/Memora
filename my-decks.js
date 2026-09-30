@@ -2,195 +2,179 @@
 // Decks are stored in localStorage for now (no backend yet).
 // Swap `loadDecks` / `saveDecks` for real API calls once one exists —
 // everything else (rendering, modal, events) stays the same.
+//
+// Decks are created on the Create Deck page (create-deck.js), which saves
+// into the same "memora_decks" list, and edits them (title and cards) via
+// create-deck.html?deck=<id>. This page only lists and deletes them.
+//
+// The page is built the way Module 10 teaches: the array is the truth, and
+// each render() rewrites the page from it with innerHTML. Anything a user
+// typed (deck titles) goes in afterwards with textContent, never innerHTML.
 
-(function () {
-  const STORAGE_KEY = "memora_decks";
+'use strict';
 
-  // ---- DOM refs ----
-  const grid = document.getElementById("mydecksGrid");
-  const emptyState = document.getElementById("mydecksEmpty");
+const STORAGE_KEY = 'memora_decks';
+const USER_KEY = 'currentUser'; // written by login.js
 
-  const modalOverlay = document.getElementById("mydecksModalOverlay");
-  const modalTitle = document.getElementById("mydecksModalTitle");
-  const modalInput = document.getElementById("mydecksModalInput");
-  const modalError = document.getElementById("mydecksModalError");
-  const modalSave = document.getElementById("mydecksModalSave");
-  const modalCancel = document.getElementById("mydecksModalCancel");
+const headerAction = document.getElementById('mydecksHeaderAction');
+const content = document.getElementById('mydecksContent');
+const modalRoot = document.getElementById('mydecksModalRoot');
 
-  // Tracks whether the modal is creating a new deck or renaming an
-  // existing one (holds the deck id while editing, null while creating).
-  let editingDeckId = null;
+// The deck the modal is currently about (null while the modal is closed).
+let activeDeckId = null;
 
-  // ---- Storage ----
-  function loadDecks() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : [];
-    } catch (err) {
-      console.error("Could not read decks from storage:", err);
-      return [];
-    }
+// ---- Login check ----
+function isLoggedIn() {
+  try {
+    return localStorage.getItem(USER_KEY) !== null;
+  } catch (err) {
+    console.error('Could not read the current user from storage:', err);
+    return false;
+  }
+}
+
+// ---- Storage ----
+function loadDecks() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    const decks = raw ? JSON.parse(raw) : [];
+    return Array.isArray(decks) ? decks : [];
+  } catch (err) {
+    console.error('Could not read decks from storage:', err);
+    return [];
+  }
+}
+
+function saveDecks(decks) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+  } catch (err) {
+    console.error('Could not save decks to storage:', err);
+  }
+}
+
+// ---- Helpers ----
+function countProgress(deck) {
+  const cards = deck.cards || [];
+  const reviewed = cards.filter((card) => card.reviewed).length;
+  return {
+    total: cards.length,
+    reviewed: reviewed,
+    notReviewed: cards.length - reviewed,
+  };
+}
+
+// ---- Rendering ----
+function render() {
+  const decks = loadDecks();
+
+  if (decks.length === 0) {
+    headerAction.innerHTML = '';
+    content.innerHTML = `
+      <div class="mydecks-empty" id="mydecksEmpty">
+        <p class="mydecks-empty__text">
+          You don't have any decks yet. Create your first one to start studying.
+        </p>
+        <a class="btn-accent" id="mydecksEmptyCreateBtn" href="create-deck.html">+ Create Deck</a>
+      </div>
+    `;
+    return;
   }
 
-  function saveDecks(decks) {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
-    } catch (err) {
-      console.error("Could not save decks to storage:", err);
-    }
+  headerAction.innerHTML =
+    '<a class="btn-accent" id="mydecksCreateBtn" href="create-deck.html">+ Create Deck</a>';
+
+  // Only our own data (generated ids, numbers) goes into this string.
+  let html = '';
+  for (const deck of decks) {
+    const progress = countProgress(deck);
+    html += `
+      <article class="deck-card mydecks-card">
+        <h2 class="deck-card__title">
+          <a class="mydecks-card__link" href="study-decks.html?deck=${deck.id}"></a>
+        </h2>
+        <p class="deck-card__progress">
+          Progress: ${progress.total} total, ${progress.reviewed} reviewed, ${progress.notReviewed} not yet reviewed
+        </p>
+        <div class="mydecks-card__actions">
+          <a class="btn-secondary" href="create-deck.html?deck=${deck.id}">Edit</a>
+          <button type="button" class="mydecks-card__delete">Delete</button>
+        </div>
+      </article>
+    `;
   }
+  content.innerHTML = html;
 
-  // ---- Helpers ----
-  function formatLastStudied(timestamp) {
-    if (!timestamp) return "Not studied yet";
-    const diffMs = Date.now() - timestamp;
-    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    if (diffDays <= 0) return "Studied today";
-    if (diffDays === 1) return "Last studied 1 day ago";
-    return `Last studied ${diffDays} days ago`;
+  // The typed part: titles go in with textContent. Then each Delete button
+  // gets its listener. The Nth card on the page belongs to decks[N].
+  const titleLinks = document.querySelectorAll('.mydecks-card__link');
+  const deleteButtons = document.querySelectorAll('.mydecks-card__delete');
+  for (let i = 0; i < decks.length; i++) {
+    const deckId = decks[i].id;
+    titleLinks[i].textContent = decks[i].title;
+    deleteButtons[i].addEventListener('click', () => openModal(deckId));
   }
+}
 
-  function makeId() {
-    return "deck_" + Date.now() + "_" + Math.floor(Math.random() * 10000);
-  }
-
-  // ---- Rendering ----
-  function render() {
-    const decks = loadDecks();
-    grid.innerHTML = "";
-
-    if (decks.length === 0) {
-      grid.hidden = true;
-      emptyState.hidden = false;
-      return;
-    }
-
-    grid.hidden = false;
-    emptyState.hidden = true;
-
-    decks.forEach((deck) => {
-      const card = document.createElement("article");
-      card.className = "mydecks-card";
-      card.dataset.deckId = deck.id;
-
-      const title = document.createElement("h2");
-      title.className = "mydecks-card__title";
-      title.textContent = deck.title;
-
-      const meta = document.createElement("p");
-      meta.className = "mydecks-card__meta";
-      const cardCount = deck.cards ? deck.cards.length : 0;
-      meta.textContent = `${cardCount} card${cardCount === 1 ? "" : "s"} · ${formatLastStudied(deck.lastStudied)}`;
-
-      const actions = document.createElement("div");
-      actions.className = "mydecks-card__actions";
-
-      const studyLink = document.createElement("a");
-      studyLink.className = "btn-primary mydecks-card__study";
-      studyLink.href = `study-decks.html?deck=${encodeURIComponent(deck.id)}`;
-      studyLink.textContent = "Study";
-
-      const editBtn = document.createElement("button");
-      editBtn.className = "btn-secondary mydecks-card__edit";
-      editBtn.textContent = "Edit";
-      editBtn.addEventListener("click", () => openModal("edit", deck.id));
-
-      const deleteBtn = document.createElement("button");
-      deleteBtn.className = "mydecks-card__delete";
-      deleteBtn.textContent = "Delete";
-      deleteBtn.addEventListener("click", () => deleteDeck(deck.id));
-
-      actions.append(studyLink, editBtn, deleteBtn);
-      card.append(title, meta, actions);
-      grid.appendChild(card);
-    });
-  }
-
-  // ---- Deck actions ----
-  function createDeck(title) {
-    const decks = loadDecks();
-    decks.push({
-      id: makeId(),
-      title,
-      cards: [],
-      lastStudied: null,
-    });
-    saveDecks(decks);
-    render();
-  }
-
-  function renameDeck(id, newTitle) {
-    const decks = loadDecks();
-    const deck = decks.find((d) => d.id === id);
-    if (deck) {
-      deck.title = newTitle;
-      saveDecks(decks);
-      render();
-    }
-  }
-
-  function deleteDeck(id) {
-    const decks = loadDecks();
-    const deck = decks.find((d) => d.id === id);
-    if (!deck) return;
-    const confirmed = window.confirm(`Delete "${deck.title}"? This can't be undone.`);
-    if (!confirmed) return;
-    saveDecks(decks.filter((d) => d.id !== id));
-    render();
-  }
-
-  // ---- Modal ----
-  function openModal(mode, deckId) {
-    editingDeckId = mode === "edit" ? deckId : null;
-    modalError.hidden = true;
-
-    if (mode === "edit") {
-      const decks = loadDecks();
-      const deck = decks.find((d) => d.id === deckId);
-      modalTitle.textContent = "Rename Deck";
-      modalInput.value = deck ? deck.title : "";
-    } else {
-      modalTitle.textContent = "Create Deck";
-      modalInput.value = "";
-    }
-
-    modalOverlay.hidden = false;
-    modalInput.focus();
-  }
-
-  function closeModal() {
-    modalOverlay.hidden = true;
-    editingDeckId = null;
-  }
-
-  function handleModalSave() {
-    const value = modalInput.value.trim();
-    if (!value) {
-      modalError.hidden = false;
-      return;
-    }
-
-    if (editingDeckId) {
-      renameDeck(editingDeckId, value);
-    } else {
-      createDeck(value);
-    }
-    closeModal();
-  }
-
-  // ---- Events ----
-  modalCancel.addEventListener("click", closeModal);
-  modalSave.addEventListener("click", handleModalSave);
-
-  modalOverlay.addEventListener("click", (e) => {
-    if (e.target === modalOverlay) closeModal();
-  });
-
-  modalInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") handleModalSave();
-    if (e.key === "Escape") closeModal();
-  });
-
-  // ---- Init ----
+// ---- Deck actions ----
+function deleteDeck(id) {
+  const decks = loadDecks();
+  saveDecks(decks.filter((d) => d.id !== id));
   render();
-})();
+}
+
+// ---- Modal ----
+// The modal only exists in the page while it is open: openModal() writes it
+// into #mydecksModalRoot and closeModal() empties that again.
+function openModal(deckId) {
+  activeDeckId = deckId;
+
+  modalRoot.innerHTML = `
+    <div class="mydecks-modal-overlay" id="mydecksModalOverlay">
+      <div class="mydecks-modal" role="dialog" aria-modal="true" aria-labelledby="mydecksModalTitle">
+        <h2 class="mydecks-modal__title" id="mydecksModalTitle">Delete Deck</h2>
+        <p class="mydecks-modal__text">Are you sure you want to delete this deck?</p>
+        <p class="mydecks-modal__text">This can't be undone.</p>
+        <div class="mydecks-modal__actions">
+          <button type="button" class="btn-secondary" id="mydecksDeleteCancel">Cancel</button>
+          <button type="button" class="mydecks-modal__delete" id="mydecksDeleteConfirm">Delete</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  const overlay = document.getElementById('mydecksModalOverlay');
+  const cancelBtn = document.getElementById('mydecksDeleteCancel');
+  const confirmBtn = document.getElementById('mydecksDeleteConfirm');
+
+  cancelBtn.addEventListener('click', closeModal);
+  confirmBtn.addEventListener('click', handleDeleteConfirm);
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal();
+  });
+
+  cancelBtn.focus();
+}
+
+function closeModal() {
+  modalRoot.innerHTML = '';
+  activeDeckId = null;
+}
+
+function handleDeleteConfirm() {
+  deleteDeck(activeDeckId);
+  closeModal();
+}
+
+// ---- Events ----
+// On the document so Escape closes the modal whichever element has focus.
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && activeDeckId !== null) closeModal();
+});
+
+// ---- Init ----
+if (isLoggedIn()) {
+  render();
+} else {
+  window.location.href = 'login.html';
+}

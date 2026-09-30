@@ -11,31 +11,18 @@
 
   <header class="nav-bar">
     <a class="nav-bar__logo" href="my-decks.html">Memora</a>
-    <nav class="nav-bar__links">
-      <a href="my-decks.html">My Decks</a>
-      <a href="index.html">Log Out</a>
-    </nav>
+    <a class="nav-bar__account-link" href="index.html">Log Out</a>
   </header>
 
   <main class="page-container mydecks-main">
 
     <section class="mydecks-header">
       <h1 class="mydecks-title">My Decks</h1>
-      <a class="btn-primary mydecks-create-btn" id="mydecksCreateBtn" href="create-deck.html">
-        + Create Deck
-      </a>
+      <div id="mydecksHeaderAction"></div>
     </section>
 
-    <!-- Filled in by my-decks.js. Hidden when there are zero decks. -->
-    <section class="mydecks-grid" id="mydecksGrid"></section>
-
-    <!-- Shown by my-decks.js instead of the grid when there are zero decks -->
-    <section class="mydecks-empty" id="mydecksEmpty" hidden>
-      <p class="mydecks-empty__text">
-        You don't have any decks yet. Create your first one to start studying.
-      </p>
-      <a class="btn-primary" id="mydecksEmptyCreateBtn" href="create-deck.html">+ Create Deck</a>
-    </section>
+    <!-- Filled in by my-decks.js: the deck cards, or the empty message when there are none. -->
+    <section class="mydecks-list" id="mydecksContent" aria-label="Your decks"></section>
 
   </main>
 
@@ -43,25 +30,8 @@
     <p>&copy; 2026 Memora</p>
   </footer>
 
-  <!-- Create / edit deck modal -->
-  <div class="mydecks-modal-overlay" id="mydecksModalOverlay" hidden>
-    <div class="mydecks-modal" role="dialog" aria-modal="true" aria-labelledby="mydecksModalTitle">
-      <h2 class="mydecks-modal__title" id="mydecksModalTitle">Create Deck</h2>
-      <label class="mydecks-modal__label" for="mydecksModalInput">Deck name</label>
-      <input
-        class="mydecks-modal__input"
-        id="mydecksModalInput"
-        type="text"
-        maxlength="60"
-        placeholder="e.g. Biology 101"
-      />
-      <p class="mydecks-modal__error" id="mydecksModalError" hidden>Please enter a deck name.</p>
-      <div class="mydecks-modal__actions">
-        <button class="btn-secondary" id="mydecksModalCancel">Cancel</button>
-        <button class="btn-primary" id="mydecksModalSave">Save</button>
-      </div>
-    </div>
-  </div>
+  <!-- The delete confirmation is written in here by my-decks.js while it is open. -->
+  <div id="mydecksModalRoot"></div>
 
   <script src="my-decks.js"></script>
 </body>

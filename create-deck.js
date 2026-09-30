@@ -1,18 +1,43 @@
+// Create Deck page. Also used as the Edit Deck page: my-decks.js links here
+// with ?deck=<id>, and then the form is filled with that deck and saving
+// updates it instead of adding a new one.
+
+const STORAGE_KEY = "memora_decks";
+
 let cardNumber = 1;
 
 const createDeckForm = document.querySelector(".create-deck-form");
 const addCardButton = document.getElementById("add-card");
 const cardsContainer = document.getElementById("card-container");
 const cancelButton = document.getElementById("cancel-deck");
+const deckTitleInput = document.getElementById("deck-title");
+const pageTitle = document.querySelector(".create-deck-title");
+const saveButton = document.querySelector("button[type='submit']");
 
-// AdD
-addCardButton.addEventListener("click", function() {
+// Set when editing an existing deck, null when creating a new one.
+let editingDeckId = new URLSearchParams(window.location.search).get("deck");
+
+// ---- Storage ----
+function loadDecks() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const decks = raw ? JSON.parse(raw) : [];
+        return Array.isArray(decks) ? decks : [];
+    } catch (error) {
+        console.error("Could not read decks from storage:", error);
+        return [];
+    }
+}
+
+// ---- Cards ----
+// Builds one Question/Answer block. Text goes in through .value (never
+// innerHTML) because it is typed by the user.
+function createCardBlock(question, answer, reviewed) {
     cardNumber++;
-
-    
 
     const newDiv = document.createElement("div");
     newDiv.classList.add("card-block");
+    newDiv.setAttribute("data-reviewed", reviewed ? "true" : "false");
 
     newDiv.innerHTML = `
         <div class="form-field">
@@ -40,7 +65,44 @@ addCardButton.addEventListener("click", function() {
         </button>
     `;
 
+    const textareas = newDiv.querySelectorAll("textarea");
+    textareas[0].value = question;
+    textareas[1].value = answer;
+
     cardsContainer.appendChild(newDiv);
+}
+
+// ---- Edit mode: fill the form with the deck being edited ----
+if (editingDeckId) {
+    const deck = loadDecks().find(function(d) {
+        return d.id === editingDeckId;
+    });
+
+    if (deck) {
+        pageTitle.textContent = "Edit Deck";
+        saveButton.textContent = "Save changes";
+        deckTitleInput.value = deck.title;
+
+        // Replace the empty starter block with the deck's own cards.
+        cardsContainer.innerHTML = "";
+        const cards = Array.isArray(deck.cards) ? deck.cards : [];
+        cards.forEach(function(card) {
+            createCardBlock(card.question, card.answer, card.reviewed);
+        });
+
+        // A deck with no cards still needs one block to type into.
+        if (cards.length === 0) {
+            createCardBlock("", "", false);
+        }
+    } else {
+        // Unknown id (deleted deck, old link): behave like a new deck.
+        editingDeckId = null;
+    }
+}
+
+// AdD
+addCardButton.addEventListener("click", function() {
+    createCardBlock("", "", false);
 });
 
 // CaNCEL
@@ -51,12 +113,54 @@ cancelButton.addEventListener("click", function() {
 // SuBMIT
 createDeckForm.addEventListener("submit", function(event) {
     event.preventDefault();
+
+    // Same deck shape and storage key that my-decks.js reads.
+    const cards = [];
+    const cardBlocks = cardsContainer.querySelectorAll(".card-block");
+
+    cardBlocks.forEach(function(block) {
+        const textareas = block.querySelectorAll("textarea");
+        cards.push({
+            question: textareas[0].value.trim(),
+            answer: textareas[1].value.trim(),
+            reviewed: block.getAttribute("data-reviewed") === "true"
+        });
+    });
+
+    const title = deckTitleInput.value.trim();
+    const decks = loadDecks();
+
+    if (editingDeckId) {
+        const deck = decks.find(function(d) {
+            return d.id === editingDeckId;
+        });
+        deck.title = title;
+        deck.cards = cards;
+    } else {
+        decks.push({
+            id: "deck_" + Date.now() + "_" + Math.floor(Math.random() * 10000),
+            title: title,
+            cards: cards,
+            lastStudied: null
+        });
+    }
+
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+    } catch (error) {
+        console.error("Could not save the deck to storage:", error);
+        return;
+    }
+
     window.location.href = "my-decks.html";
 });
 
 // ReMOVE
 cardsContainer.addEventListener("click", function(event) {
     if (event.target.classList.contains("remove-card")) {
-        event.target.parentElement.remove();
+        // A deck needs at least one card.
+        if (cardsContainer.querySelectorAll(".card-block").length > 1) {
+            event.target.parentElement.remove();
+        }
     }
 });
