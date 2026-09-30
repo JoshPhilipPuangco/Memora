@@ -46,8 +46,8 @@ Each page loads `shared.css` plus its own page-specific CSS file. `style.css` an
 | ---------------- | -------------------------------------------------------------- |
 | Home             | ![Home Page](assets/screenshots/Home-Page.png)                 |
 | Log In / Sign Up | ![Login Signup Page](assets/screenshots/Login-Signup-Page.png) |
-| Create Deck      | ![Create Deck Page](assets/screenshots/Create-Deck-Page.png)   |
 | My Decks         | ![My Decks Page](assets/screenshots/My-Decks-Page.png)         |
+| Create Deck      | ![Create Deck Page](assets/screenshots/Create-Deck-Page.png)   |
 | Study Mode       | ![Study Mode Page](assets/screenshots/Study-Mode-Page.png)     |
 
 ## 6. Known issues and next steps
