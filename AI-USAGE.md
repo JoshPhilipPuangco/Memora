@@ -55,14 +55,20 @@ it in your own words.
 > Group projects: give each member their own heading below, and use your GitHub
 > handle as the heading. You are graded on your own section.
 
-### Written by me
+### JoshPhilipPuangco
 
-- **File:**
-- **Commit:**
-- **What it does and why it is built this way:**
+#### Written by me
 
-### The AI-written part I understand best
+##### Login/Signup page markup
 
-- **File:**
-- **Commit:**
-- **What it does and why we kept it:**
+- **File:** Memora/login.html
+- **Commit:** [ef717c4](https://github.com/JoshPhilipPuangco/Memora/commit/ef717c4599e870d2a027a74067d2236730ad841a)
+- **What it does and why it is built this way:** This file is the HTML for the Login and Sign Up page. It is one page with two forms inside it, a login form and a signup form, instead of two separate pages. A pair of buttons at the top, the tab switcher, show one form and hide the other, using the hidden attribute, so the user never sees both at once and the page never reloads when they switch. Each form has a short note that says which fields are required, labels with a red asterisk on each required field, and an empty paragraph where an error message can be shown. The signup form also has a short helper line under each field that explains the rule for that field, such as the minimum length for the password. Both forms have the novalidate attribute, which turns off the browser's own pop-up validation, so the JavaScript file the AI wrote mostly (login.js) is the only thing that checks the input and shows error text. Every input, form, and error paragraph has an id, because login.js finds them with getElementById and uses them to read what the user typed and to save or check the account in localStorage. If an id here is changed without changing login.js to match, the matching lookup in login.js would stop working. Lastly, the novalidate attribute and the hidden attribute are not in Module 5 (Tables and Forms), which only covers required, type, pattern, minlength, and maxlength for the browser's built in validation. These two were not discussed in class, so outside research on MDN was needed to learn what they do and how to use them.
+
+#### The AI-written part I understand best
+
+##### Login/Signup validation and tab logic
+
+- **File:** Memora/login.js
+- **Commit:** [ef717c4](https://github.com/JoshPhilipPuangco/Memora/commit/ef717c4599e870d2a027a74067d2236730ad841a)
+- **What it does and why we kept it:** This file is the JavaScript for the Login and Sign Up page. It finds the tab buttons, the two forms, the two error paragraphs, and all five inputs by id. The showTab function switches the class on the tab buttons and the hidden property on the two forms, so only one form shows at a time, and it clears both error messages every time the tab changes. The initTabFromHash function reads the page's URL hash when the page loads and picks the signup tab if the hash is #signup, so the Sign Up button on the Home page can open straight to that tab. The three isXValid functions check the username, email, and password by hand, using character loops, includes, and indexOf, instead of a regular expression, because the course has not covered RegExp. getAccount, saveAccount, and setCurrentUser read and write to localStorage with JSON.stringify and JSON.parse, since this project has no server and localStorage was agreed as an allowed exception. handleSignup and handleLogin run when a form is submitted. They call event.preventDefault() so the page does not reload, read the typed values, run them through the checks in order, and either show an error message or save the account and send the user to my-decks.html. We kept this file because it covers the whole signup and login flow in a way I can trace end to end, and most of it uses array and string methods already taught in class. A few parts (className, the hidden property, event.preventDefault(), and location.hash) are not one of the JavaScript concepts covered in class, so I looked these up myself to understand them before accepting the code. If any input or form id in login.html changed without a matching change here, the getElementById calls at the top of this file would return null, and clicking a tab or submitting a form would break.
