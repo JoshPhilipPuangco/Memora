@@ -27,6 +27,14 @@ At least six entries. One per real use. Every entry needs a commit link.
 - **What I kept, what I changed, and why:** I kept the two-file CSS structure and most of the layout as given. During the session I asked for the heading and intro text sizing to be fixed to match the wireframe, for the footer to stick to the bottom using flexbox, for the button sizing on desktop to be reverted after trying a scoped override, and for the content to be vertically centered instead of horizontally.
 - **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/1fdc64d3c54b32dae52e19269b1b54c9a09ff4eb
 
+### 2026-09-30 - Renaming the My Decks and Study Decks files
+
+- **Tool:** Claude Code
+- **What I asked for:** I asked Claude to rename the files of the My Decks and Study Decks pages so they follow the Create Deck naming style (dashes, "deck" spelled out), without breaking any page. I gave it a prompt file with the setup, the source files to read, and the old file names. I told it to work on the renaming-files branch. I said I would commit, push, and merge myself, so it only gave me the commands. I also asked for a note for my teammates about the new names.
+- **What it gave back:** It searched the whole repo for the old names first and made a plan before changing anything. It renamed the files with git mv (mydecks.* to my-decks.*, study.* to study-decks.*) and updated every link that used the old names: the CSS and JS tags, the logo and back links, and the Study button in my-decks.js. It also removed a script tag for a shared.js file that does not exist, and updated the README file names. It checked that no old names were left and that every link in the HTML and JS files points to a file that exists. It served the site locally and the new files loaded. After I merged, it wrote a note for my teammates.
+- **What I kept, what I changed, and why:** I kept the new names my-decks and study-decks, and I agreed to removing the shared.js tag. I changed the plan: I took back my earlier instruction to let Claude commit, push, and merge, because I wanted to do those steps myself, and I asked for the teammate note after the merge. I kept the CSS classes and IDs (like .mydecks-*) unchanged, because they are not file names and changing them is riskier. Claude removed Known Issues 1 to 3 from the README because the rename fixed them, and I reviewed those README edits myself before I committed. Claude only ran an automated link check and a local server test, not a click-through in a real browser, so I tested the pages myself afterwards.
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/9db43a0c5e2bf83efd94487c2dd6f33ac0c53a38
+
 ## 2. Where the AI got it wrong
 
 Three cases. Be specific. If you write that the AI was never wrong, this section
