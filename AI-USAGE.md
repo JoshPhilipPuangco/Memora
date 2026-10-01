@@ -19,6 +19,14 @@ At least six entries. One per real use. Every entry needs a commit link.
 - **What I kept, what I changed, and why:**
 - **Commit:** https://github.com/YOUR-USERNAME/YOUR-REPO/commit/SHA
 
+### 2026-10-02 - Home page build and review
+
+- **Tool:** Claude Code
+- **What I asked for:** I asked Claude to build the Home page for Memora as the reference pattern for the rest of the group. I gave it the site map, proposal, design system spec, and wireframes, and set the rules: no direct pushes to main, a two-file CSS split (shared.css for sitewide classes, a page-specific file for prefixed classes), and semantic HTML. I later asked for several rounds of fixes to match the wireframes more closely, a review against the course's concept coverage files, a sync check against the design system spec, and a final review before I pushed the branch myself.
+- **What it gave back:** It gave back index.html, shared.css, and home.css for the Home page, plus matching edits to Design-System-Specification.css to keep it in sync with shared.css. It added hover and active state transitions, a prefers-reduced-motion rule, and a --content-max-width token. It also ran html-validate and axe-core checks and compared screenshots against the wireframes at mobile and desktop sizes.
+- **What I kept, what I changed, and why:** [CHECK] I kept the two-file CSS structure and most of the layout as given. During the session I asked for the heading and intro text sizing to be fixed to match the wireframe, for the footer to stick to the bottom using flexbox, for the button sizing on desktop to be reverted after trying a scoped override, and for the content to be vertically centered instead of horizontally. [CHECK: please confirm if there were other changes you made by hand after this, since I only have the in-session record, not the final diff of the commit.]
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/1fdc64d3c54b32dae52e19269b1b54c9a09ff4eb
+
 ## 2. Where the AI got it wrong
 
 Three cases. Be specific. If you write that the AI was never wrong, this section
