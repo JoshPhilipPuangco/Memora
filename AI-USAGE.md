@@ -19,7 +19,7 @@ At least six entries. One per real use. Every entry needs a commit link.
 - **What I kept, what I changed, and why:**
 - **Commit:** https://github.com/YOUR-USERNAME/YOUR-REPO/commit/SHA
 
-### 2026-10-02 - Home page build and review
+### 2026-09-22 - Home page build and review
 
 - **Tool:** Claude Code
 - **What I asked for:** I asked Claude to build the Home page for Memora as the reference pattern for the rest of the group. I gave it the site map, proposal, design system spec, and wireframes, and set the rules: no direct pushes to main, a two-file CSS split (shared.css for sitewide classes, a page-specific file for prefixed classes), and semantic HTML. I later asked for several rounds of fixes to match the wireframes more closely, a review against the course's concept coverage files, a sync check against the design system spec, and a final review before I pushed the branch myself.
