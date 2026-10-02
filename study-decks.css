@@ -87,6 +87,79 @@
   text-align: center;
 }
 
+/* Marked state for Mark Reviewed / Mark Not Yet Reviewed. Same look as the
+   selected tab in shared.css (.tab.is-selected). The icons use currentColor,
+   so they turn white with the text. */
+.study-mark-row .btn-secondary-icon.is-marked {
+  background: var(--text);
+  border-color: var(--text);
+  color: #FFFFFF;
+}
+
+/* --- Finish dialog --- */
+/* Written to match the delete dialog on My Decks. It is always in the page and
+   shown by adding .is-open, so it is display:none until then. */
+.study-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-edge-mobile);
+  z-index: 100;
+}
+
+.study-modal-overlay.is-open {
+  display: flex;
+  animation: study-fade-in 0.15s ease-out;
+}
+
+@keyframes study-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.study-modal {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-standard);
+  width: 100%;
+  max-width: 420px;
+}
+
+.study-modal__title {
+  margin: 0 0 var(--space-standard);
+}
+
+.study-modal__text {
+  margin: 0;
+}
+
+.study-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-tight);
+  margin-top: var(--space-standard);
+}
+
+.study-modal__actions .is-hidden {
+  display: none;
+}
+
+/* Buttons are at least 44px tall on phones, then go back to their natural
+   size from 768px up (same rule as the My Decks dialog). */
+.study-modal__actions > * {
+  min-height: 44px;
+}
+
+@media (min-width: 768px) {
+  .study-modal__actions > * {
+    min-height: 0;
+  }
+}
+
 /* Several study-* blocks set display:flex, which would otherwise override
    the browser's default [hidden] rule. */
 .study-main [hidden] {
