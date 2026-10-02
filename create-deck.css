@@ -22,6 +22,26 @@
     resize: vertical;
 }
 
+/* Field flagged by create-deck.js when it is left empty. The hover and focus
+   rules repeat the color so they win over shared.css's .form-field states. */
+.form-field input.is-invalid,
+.form-field textarea.is-invalid,
+.form-field input.is-invalid:hover,
+.form-field textarea.is-invalid:hover,
+.form-field input.is-invalid:focus,
+.form-field textarea.is-invalid:focus{
+    border-color: var(--error);
+}
+
+/* The error line sits under the flagged field, so it is left-aligned and
+   only as tall as its text (shared.css's .form-error is centered and reserves
+   two lines for Log In / Sign Up). */
+.form-field .form-error{
+    min-height: 0;
+    justify-content: flex-start;
+    text-align: left;
+}
+
 /* Remove Card is added by create-deck.js as a direct child of the card block
    (a flex column), so it would stretch full width. Keep its natural width. */
 .card-block .remove-card{
