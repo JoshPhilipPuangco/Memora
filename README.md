@@ -60,7 +60,7 @@ Each page loads `shared.css` plus its own page-specific CSS file. `style.css` an
 | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | 1   | The "Log Out" link goes to Home but does not clear the logged-in user.                                                                                                                                | Clear the current user from `localStorage` on log out.                                                                       |
 | 2   | Create Deck and Study can still be opened directly by URL without logging in first. (My Decks already checks.)                                                                                       | Add the same login check at the top of each of those pages' JavaScript.                                                      |
-| 3   | On the Create Deck / Edit Deck page, the heading sits tight against the nav bar and the Remove Card buttons stretch full width (desktop and mobile), and the button row touches the footer (desktop). | Adjust the spacing in `create-deck.css`: room above the heading and below the buttons, and Remove Card at its natural width. |
+| 3   | On Create Deck / Edit Deck, leaving a field empty shows the browser's built-in "Please fill out this field" bubble. It can't be styled and does not match the red inline errors on Log In / Sign Up. | Replace it with an inline `.form-error` message (as in `login.js`), or style invalid fields with `:invalid` and `--error`. |
 
 ## AI use
 
