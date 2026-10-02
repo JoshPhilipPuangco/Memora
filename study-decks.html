@@ -23,7 +23,8 @@
 
     <div class="study-header" id="studyHeader">
       <h1 class="study-header__title" id="deckTitle"></h1>
-      <p class="helper-text" id="progressText"></p>
+      <p class="helper-text" id="progressText" aria-live="polite"></p>
+      <p class="helper-text" id="roundText"></p>
     </div>
 
     <div class="flashcard" id="flashcard" tabindex="0" role="button"
@@ -69,6 +70,21 @@
       </button>
     </div>
   </main>
+
+  <!-- Finish dialog: opened by study-decks.js when a round ends or when a deck
+       with saved progress is opened. Its text and buttons change per case. -->
+  <div class="study-modal-overlay" id="studyModalOverlay">
+    <section class="study-modal" role="dialog" aria-modal="true"
+             aria-labelledby="studyModalTitle" aria-describedby="studyModalText">
+      <h2 class="study-modal__title" id="studyModalTitle">Round complete</h2>
+      <p class="study-modal__text" id="studyModalText"></p>
+      <div class="study-modal__actions">
+        <button class="btn-secondary" id="studyModalDismiss" type="button">Not now</button>
+        <button class="btn-secondary" id="studyResetBtn" type="button">Reset progress</button>
+        <button class="btn-primary" id="studyReviewMissedBtn" type="button">Review cards</button>
+      </div>
+    </section>
+  </div>
 
   <footer class="footer">
     <p>&copy; 2026 Memora</p>
