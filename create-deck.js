@@ -29,6 +29,62 @@ function loadDecks() {
     }
 }
 
+// ---- Error message ----
+// Only one field is flagged at a time. The message is a .form-error line
+// added at the bottom of that field's .form-field, so it shows right under
+// the empty box.
+let flaggedField = null;
+let flaggedMessage = null;
+
+function showError(field, message) {
+    flaggedField = field;
+    flaggedField.classList.add("is-invalid");
+
+    flaggedMessage = document.createElement("p");
+    flaggedMessage.classList.add("form-error");
+    flaggedMessage.textContent = message;
+    flaggedField.parentElement.appendChild(flaggedMessage);
+
+    // Scrolls the box into view if it is off-screen and puts the cursor in it.
+    flaggedField.focus();
+}
+
+function clearError() {
+    if (flaggedField) {
+        flaggedField.classList.remove("is-invalid");
+        flaggedMessage.remove();
+        flaggedField = null;
+        flaggedMessage = null;
+    }
+}
+
+// Shows the error for the first empty field (title, then each card's
+// question and answer in page order). Returns true if one was found.
+function showFirstEmptyField() {
+    if (deckTitleInput.value.trim() === "") {
+        showError(deckTitleInput, "Please enter a deck title.");
+        return true;
+    }
+
+    const cardBlocks = cardsContainer.querySelectorAll(".card-block");
+
+    for (let i = 0; i < cardBlocks.length; i++) {
+        const textareas = cardBlocks[i].querySelectorAll("textarea");
+
+        if (textareas[0].value.trim() === "") {
+            showError(textareas[0], "Please fill in the question for card " + (i + 1) + ".");
+            return true;
+        }
+
+        if (textareas[1].value.trim() === "") {
+            showError(textareas[1], "Please fill in the answer for card " + (i + 1) + ".");
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // ---- Cards ----
 // Builds one Question/Answer block. Text goes in through .value (never
 // innerHTML) because it is typed by the user.
@@ -113,6 +169,12 @@ cancelButton.addEventListener("click", function() {
 // SuBMIT
 createDeckForm.addEventListener("submit", function(event) {
     event.preventDefault();
+    clearError();
+
+    // Nothing is saved while a title, question, or answer is empty.
+    if (showFirstEmptyField()) {
+        return;
+    }
 
     // Same deck shape and storage key that my-decks.js reads.
     const cards = [];
@@ -160,7 +222,16 @@ cardsContainer.addEventListener("click", function(event) {
     if (event.target.classList.contains("remove-card")) {
         // A deck needs at least one card.
         if (cardsContainer.querySelectorAll(".card-block").length > 1) {
+            // Removing a card shifts the card numbers, so drop the error.
+            clearError();
             event.target.parentElement.remove();
         }
+    }
+});
+
+// Typing in the flagged field clears its red border and the error message.
+createDeckForm.addEventListener("input", function(event) {
+    if (event.target === flaggedField) {
+        clearError();
     }
 });

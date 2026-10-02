@@ -23,7 +23,7 @@
         <h1 class="create-deck-title">Create a New Deck</h1>
        
 <!--forms -->
-        <form class="create-deck-form">  
+        <form class="create-deck-form" novalidate>
             <div class="form-field">
                 <label for="deck-title">Deck Title</label>
 
@@ -60,6 +60,11 @@
                 required
             ></textarea>
         </div>
+
+        <!--remove card (hidden by create-deck.css while this is the only card) -->
+        <button type="button" class="btn-secondary remove-card">
+            Remove Card
+        </button>
 
     </div>
     </div>
