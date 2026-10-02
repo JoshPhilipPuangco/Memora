@@ -39,6 +39,15 @@ scores zero.
 - **What I did instead:** I asked Claude to review the HTML, CSS and JS against the Concept Coverage files, and I chose the "strict where it is cheap" option. Claude rewrote my-decks.js so render() builds the page from the deck array with innerHTML and sets the deck titles afterwards with textContent. The empty state and the delete confirmation are written in the same way, so createElement, className, append, appendChild, hidden, Boolean(), encodeURIComponent() and the wrapper are gone. A few calls stay on purpose and are listed as outside the coverage: .focus() (I asked to keep it), window.location.href for the login redirect, Array.isArray, and e.key and e.target for the Escape key and clicking outside the modal. localStorage, JSON and URLSearchParams were already agreed as exceptions.
 - **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/ab5ab7759131727d2d76a51a1e694f765e3552fc (Claude's first version of my-decks.js was never committed, because I found the problem before committing. The older my-decks.js in this repository came from an earlier commit (https://github.com/JoshPhilipPuangco/Memora/commit/81f0804e5cbd5852ac488d31b1d0ee64f45cb2f3) and used createElement 7 times. This commit replaces that older file with the final version that uses innerHTML and textContent, so the diff shows createElement going away. Claude's false claim about the coverage is only in my session with Claude, not in the commit.)
 
+
+### Case 2 - Incorrect form selector
+
+- **What it gave me:** An incorrect way of selecting the form using the element ID selector format.
+- **What was wrong with it:** The form uses the class `create-deck-form`, so the selector needs to use `querySelector` with `.create-deck-form`.
+- **What I did instead:** I used `document.querySelector(".create-deck-form")`.
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+
+
 ## 3. Who wrote what
 
 At least a fifth of this project is code you wrote yourself. Name it, and explain
@@ -70,3 +79,34 @@ it in your own words.
   The initTabFromHash function reads the page's URL hash when the page loads and picks the signup tab if the hash is #signup, so the Sign Up button on the Home page can open straight to that tab. The three isXValid functions check the username, email, and password by hand, using character loops, includes, and indexOf, instead of a regular expression, because the course has not covered RegExp. getAccount, saveAccount, and setCurrentUser read and write to localStorage with JSON.stringify and JSON.parse, since this project has no server and localStorage was agreed as an allowed exception. handleSignup and handleLogin run when a form is submitted. They call event.preventDefault() so the page does not reload, read the typed values, run them through the checks in order, and either show an error message or save the account and send the user to my-decks.html. We kept this file because it covers the whole signup and login flow in a way I can trace end to end, and most of it uses array and string methods already taught in class.
     
   A few parts (className, the hidden property, event.preventDefault(), and location.hash) are not in the Concept Coverage files, so I looked them up myself to understand them before accepting the code. I kept them in login.js, but I had className and the hidden property removed from my-decks.js (see Case 1). The reason is that the login page works in a different way. It is one page with two forms, and it must switch between them without a reload. event.preventDefault() stops the page from reloading when a form is submitted. location.hash lets the Sign Up button on the Home page open the page on the signup tab. The hidden property switches between two forms that are already in the HTML, so the page does not have to rebuild them. I did not find a way in the Concept Coverage files to prevent the reload, read the hash, or switch between two existing forms. className is the weakest case. It changes which tab button looks active when showTab runs, and initTabFromHash decides which tab shows first. I did not look for a covered way to do what className does. login.js was merged before the coverage review in Case 1, and after the review I decided to keep it for the reasons above.
+
+
+### CharlesM-27
+
+#### Written by me
+
+##### Create Deck HTML
+
+- **File:** `create-deck.html`
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **What it does and why it is built this way:** This file creates the Create Deck page structure. It contains the deck title field, question and answer fields, card container, and buttons. It reuses the shared classes from `shared.css` and uses Create Deck-specific classes where needed.
+
+##### Create Deck CSS
+
+- **File:** `create-deck.css`
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **What it does and why it is built this way:** This file contains styling specific to the Create Deck page. It controls the title alignment, form layout, and textarea size while leaving reusable component styles in `shared.css`.
+
+##### Create Deck JavaScript
+
+- **File:** `create-deck.js`
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **What it does and why it is built this way:** This file provides the page interactions. It adds new cards, gives their fields unique numbers, removes cards, handles Cancel, and prevents the form from reloading the page when submitted.
+
+#### The AI-written part I understand best
+
+##### Dynamic card creation
+
+- **File:** `create-deck.js`
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **What it does and why we kept it:** The JavaScript creates new card sections when Add another card is clicked. The `cardNumber` variable increases so each new question and answer gets a unique ID. The Remove Card event listener allows dynamically created cards to be removed. I tested these functions in the browser and understand how the event listeners, DOM elements, and card container work together.
