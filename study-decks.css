@@ -1,59 +1,72 @@
 /* ==========================================================================
    MEMORA — STUDY MODE PAGE
    Page-specific rules only. Classes are prefixed .study-* so they never
-   collide with shared.css or another page's stylesheet.
+   collide with shared.css or another page's stylesheet. Shared components
+   (.flashcard, .button-pair, .btn-secondary-icon) keep their shared styles;
+   the page adds its own .study-* class next to them.
    ========================================================================== */
 
 .study-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-standard);
   padding-top: var(--space-standard);
   padding-bottom: var(--space-standard);
 }
 
-.study-back {
-  align-self: flex-start;
-}
-
-.study-header {
+/* One centered column holds every block, so each block does not need its own
+   max-width. */
+.study-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-standard);
   width: 100%;
   max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Full width on phones, natural width at the left of the column from 768px up. */
+.study-back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.study-header,
+.study-message {
   background: var(--surface);
   border: 1px solid var(--border-grey);
   border-radius: var(--radius-md);
   padding: var(--space-standard);
+  /* A long title or message with no spaces would otherwise run out of the box. */
+  overflow-wrap: anywhere;
+}
+
+.study-header {
   display: flex;
   flex-direction: column;
   gap: var(--space-tight);
 }
 
-.study-header__title {
-  font-size: var(--font-size-heading);
+/* Message shown when there is no deck to study: no deck ID, deck not found, or no cards. */
+.study-message {
+  text-align: center;
 }
 
-.flashcard {
-  width: 100%;
-  max-width: 900px;
-  min-height: 240px;
+.study-message__text {
+  margin: 0;
+}
+
+.study-flashcard {
+  min-height: 260px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
-.flashcard__question,
-.flashcard__answer {
-  font-size: 20px;
+.study-flashcard__text {
+  font-size: var(--font-size-body);
   line-height: 1.5;
   max-width: 60ch;
-}
-
-.study-mark-row,
-.study-nav-row {
-  width: 100%;
-  max-width: 900px;
+  overflow-wrap: anywhere;
 }
 
 .study-mark-row .btn-secondary-icon,
@@ -61,30 +74,39 @@
   justify-content: center;
 }
 
+/* Buttons are at least 44px tall on phones, then go back to their natural
+   size from 768px up (same rule as the My Decks page). */
+.study-back,
+.study-mark-row > *,
+.study-nav-row > * {
+  min-height: 44px;
+}
+
 @media (min-width: 768px) {
-  .study-header {
-    padding: var(--space-standard) var(--space-standard);
+  .study-back {
+    align-self: flex-start;
   }
 
-  .flashcard {
+  .study-back,
+  .study-mark-row > *,
+  .study-nav-row > * {
+    min-height: 0;
+  }
+
+  /* All four buttons share one width (320px, as in the wireframe), so the two
+     rows line up on both the left and right edges. */
+  .study-mark-row > *,
+  .study-nav-row > * {
+    width: 320px;
+  }
+
+  .study-flashcard {
     min-height: 340px;
   }
 
-  .flashcard__question,
-  .flashcard__answer {
-    font-size: 22px;
+  .study-flashcard__text {
+    font-size: var(--font-size-heading);
   }
-}
-
-/* Empty / error message shown when there is no deck or no cards. */
-.study-message {
-  width: 100%;
-  max-width: 900px;
-  background: var(--surface);
-  border: 1px solid var(--border-grey);
-  border-radius: var(--radius-md);
-  padding: var(--space-standard);
-  text-align: center;
 }
 
 /* Marked state for Mark Reviewed / Mark Not Yet Reviewed. Same look as the
@@ -161,9 +183,8 @@
 }
 
 /* Several study-* blocks set display:flex, which would otherwise override
-   the browser's default [hidden] rule. study-decks.js hides the whole page
-   this way while it sends a logged-out visitor to Log In. */
-.study-main[hidden],
-.study-main [hidden] {
+   the browser's default [hidden] rule. study-decks.js hides these blocks
+   this way when there is no deck or no cards to study. */
+.study-content [hidden] {
   display: none;
 }
