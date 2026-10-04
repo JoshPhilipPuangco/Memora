@@ -62,34 +62,64 @@
     }
   }
 
+  function writeDecks(list) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    } catch (err) {
+      console.error('Could not save decks to storage:', err);
+    }
+  }
+
   // Only this deck's marks are written back, into the list as it is in storage
   // right now. Saving the list loaded when the page opened would undo anything
   // done in another tab since (a deleted deck would come back, edited cards
   // would be replaced). If this deck was deleted in the meantime, nothing is
-  // saved. A mark is copied only onto the saved card at the same position
-  // with the same question; cards have no ids, so a card that was edited,
-  // moved or removed elsewhere loses its mark instead of landing on the wrong card.
+  // saved. Each mark is copied onto the saved card with the same id, wherever
+  // that card is now; a card that was removed elsewhere is skipped, so a mark
+  // can never land on the wrong card.
   function saveDecks() {
     const latest = loadDecks();
-    const i = latest.findIndex((d) => d.id === deck.id);
-    if (i === -1) return;
+    const saved = latest.find((d) => d.id === deck.id);
+    if (!saved) return;
 
-    const saved = latest[i];
     if (Array.isArray(saved.cards)) {
-      for (let j = 0; j < deck.cards.length; j++) {
-        const savedCard = saved.cards[j];
-        if (savedCard && savedCard.question === deck.cards[j].question) {
-          savedCard.reviewed = deck.cards[j].reviewed;
-        }
+      for (const card of deck.cards) {
+        const savedCard = saved.cards.find((c) => c.id === card.id);
+        if (savedCard) savedCard.reviewed = card.reviewed;
       }
     }
     saved.lastStudied = deck.lastStudied;
 
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(latest));
-    } catch (err) {
-      console.error('Could not save decks to storage:', err);
-    }
+    writeDecks(latest);
+  }
+
+  // Decks saved before cards had ids have none. Each such card gets one here,
+  // matched to the saved card at the same position with the same question
+  // (the only way left to tell them apart), and it is saved once. Create Deck
+  // gives every card an id from then on. The id format is the same as
+  // makeCardId in create-deck.js. The pages share no JS file, so keep the two
+  // in sync by hand.
+  function giveCardsIds() {
+    let missing = false;
+    deck.cards.forEach((card, i) => {
+      if (!card.id) {
+        card.id = 'card_' + Date.now() + '_' + i + '_' + Math.floor(Math.random() * 10000);
+        missing = true;
+      }
+    });
+    if (!missing) return;
+
+    const latest = loadDecks();
+    const saved = latest.find((d) => d.id === deck.id);
+    if (!saved || !Array.isArray(saved.cards)) return;
+
+    deck.cards.forEach((card, i) => {
+      const savedCard = saved.cards[i];
+      if (savedCard && !savedCard.id && savedCard.question === card.question) {
+        savedCard.id = card.id;
+      }
+    });
+    writeDecks(latest);
   }
 
   // ---- Empty / error states ----
@@ -304,6 +334,7 @@
       return;
     }
 
+    giveCardsIds();
     deck.lastStudied = Date.now();
     saveDecks();
 
