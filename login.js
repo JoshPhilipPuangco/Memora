@@ -1,6 +1,6 @@
 'use strict';
 
-const USER_KEY = 'currentUser'; // read by my-decks.js
+const USER_KEY = 'currentUser'; // read by my-decks.js, create-deck.js, and study-decks.js
 
 const loginMain = document.querySelector('.login-main');
 const tabLogin = document.getElementById('tab-login');

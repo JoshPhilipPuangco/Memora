@@ -3,9 +3,11 @@
 // updates it instead of adding a new one.
 
 const STORAGE_KEY = "memora_decks";
+const USER_KEY = "currentUser"; // written by login.js
 
 let cardNumber = 1;
 
+const pageMain = document.querySelector(".page-container");
 const createDeckForm = document.querySelector(".create-deck-form");
 const addCardButton = document.getElementById("add-card");
 const cardsContainer = document.getElementById("card-container");
@@ -16,6 +18,16 @@ const saveButton = document.querySelector("button[type='submit']");
 
 // Set when editing an existing deck, null when creating a new one.
 let editingDeckId = new URLSearchParams(window.location.search).get("deck");
+
+// ---- Login check ----
+function isLoggedIn() {
+    try {
+        return localStorage.getItem(USER_KEY) !== null;
+    } catch (error) {
+        console.error("Could not read the current user from storage:", error);
+        return false;
+    }
+}
 
 // ---- Storage ----
 function loadDecks() {
@@ -251,5 +263,18 @@ cardsContainer.addEventListener("click", function(event) {
 createDeckForm.addEventListener("input", function(event) {
     if (event.target === flaggedField) {
         clearError();
+    }
+});
+
+// 'pageshow' fires on the first load AND when the Back button restores the
+// page from the browser's cache without re-running this script. Anyone who is
+// not logged in is sent to Log In, and the page is hidden meanwhile so the
+// form never shows.
+window.addEventListener("pageshow", function() {
+    if (isLoggedIn()) {
+        pageMain.hidden = false;
+    } else {
+        pageMain.hidden = true;
+        window.location.href = "login.html";
     }
 });
