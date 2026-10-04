@@ -19,6 +19,7 @@ const USER_KEY = 'currentUser'; // written by login.js
 const headerAction = document.getElementById('mydecksHeaderAction');
 const content = document.getElementById('mydecksContent');
 const modalRoot = document.getElementById('mydecksModalRoot');
+const logoutLink = document.getElementById('logoutLink');
 
 // The deck the modal is currently about (null while the modal is closed).
 let activeDeckId = null;
@@ -30,6 +31,16 @@ function isLoggedIn() {
   } catch (err) {
     console.error('Could not read the current user from storage:', err);
     return false;
+  }
+}
+
+// Removes the logged-in user. The link's own href then takes the browser to
+// Home. The account and the decks stay saved.
+function logOut() {
+  try {
+    localStorage.removeItem(USER_KEY);
+  } catch (err) {
+    console.error('Could not clear the current user from storage:', err);
   }
 }
 
@@ -167,6 +178,8 @@ function handleDeleteConfirm() {
 }
 
 // ---- Events ----
+logoutLink.addEventListener('click', logOut);
+
 // On the document so Escape closes the modal whichever element has focus.
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && activeDeckId !== null) closeModal();
