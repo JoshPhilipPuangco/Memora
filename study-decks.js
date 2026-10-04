@@ -11,8 +11,10 @@
   'use strict';
 
   const STORAGE_KEY = 'memora_decks';
+  const USER_KEY = 'currentUser'; // written by login.js
 
   // ---- DOM refs ----
+  const studyMain = document.querySelector('.study-main');
   const studyMessage = document.getElementById('studyMessage');
   const studyMessageText = document.getElementById('studyMessageText');
   const studyHeader = document.getElementById('studyHeader');
@@ -49,6 +51,17 @@
   let isReviewRound = false;
   let isDialogOpen = false;
   let pressStartedOnOverlay = false;
+  let hasStarted = false;
+
+  // ---- Login check ----
+  function isLoggedIn() {
+    try {
+      return localStorage.getItem(USER_KEY) !== null;
+    } catch (err) {
+      console.error('Could not read the current user from storage:', err);
+      return false;
+    }
+  }
 
   // ---- Storage ----
   function loadDecks() {
@@ -372,5 +385,20 @@
     if (deck.cards.some((c) => c.reviewed)) openFinishDialog(true);
   }
 
-  init();
+  // 'pageshow' fires on the first load AND when the Back button restores the
+  // page from the browser's cache without re-running this script. Anyone who
+  // is not logged in is sent to Log In, and the page is hidden meanwhile.
+  // init() runs only once, because it adds the event listeners.
+  window.addEventListener('pageshow', () => {
+    if (!isLoggedIn()) {
+      studyMain.hidden = true;
+      window.location.href = 'login.html';
+      return;
+    }
+    studyMain.hidden = false;
+    if (!hasStarted) {
+      hasStarted = true;
+      init();
+    }
+  });
 })();

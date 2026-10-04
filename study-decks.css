@@ -161,7 +161,9 @@
 }
 
 /* Several study-* blocks set display:flex, which would otherwise override
-   the browser's default [hidden] rule. */
+   the browser's default [hidden] rule. study-decks.js hides the whole page
+   this way while it sends a logged-out visitor to Log In. */
+.study-main[hidden],
 .study-main [hidden] {
   display: none;
 }
