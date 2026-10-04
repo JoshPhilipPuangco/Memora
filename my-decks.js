@@ -173,8 +173,14 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ---- Init ----
-if (isLoggedIn()) {
-  render();
-} else {
-  window.location.href = 'login.html';
-}
+// 'pageshow' fires on the first load AND when the Back button restores the
+// page from the browser's cache without re-running this script. Redrawing
+// each time keeps the progress numbers current.
+window.addEventListener('pageshow', () => {
+  if (isLoggedIn()) {
+    closeModal();
+    render();
+  } else {
+    window.location.href = 'login.html';
+  }
+});
