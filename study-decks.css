@@ -69,6 +69,28 @@
   overflow-wrap: anywhere;
 }
 
+/* Card-side icon: two overlapping squares. While the front shows, the front
+   square is blue. While the back shows (study-decks.js adds .is-flipped to the
+   card), the back square is filled blue and both outlines are gray. */
+.study-flashcard__back-box {
+  fill: var(--surface);
+  stroke: var(--border-grey-dark);
+}
+
+.study-flashcard__front-box {
+  fill: var(--surface);
+  stroke: var(--primary);
+}
+
+.flashcard.is-flipped .study-flashcard__back-box {
+  fill: var(--primary);
+  stroke: var(--primary);
+}
+
+.flashcard.is-flipped .study-flashcard__front-box {
+  stroke: var(--border-grey-dark);
+}
+
 .study-mark-row .btn-secondary-icon,
 .study-nav-row .btn-secondary-icon {
   justify-content: center;

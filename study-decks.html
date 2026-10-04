@@ -30,12 +30,10 @@
 
       <div class="flashcard study-flashcard" id="flashcard" tabindex="0" role="button"
            aria-label="Flashcard, click or press Enter to flip">
-        <svg class="flashcard__flip-icon" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2" aria-hidden="true">
-          <path d="M17 2.1l4 4-4 4" />
-          <path d="M3 12.1v-2a4 4 0 0 1 4-4h14" />
-          <path d="M7 21.9l-4-4 4-4" />
-          <path d="M21 11.9v2a4 4 0 0 1-4 4H3" />
+        <svg class="flashcard__flip-icon study-flashcard__side-icon" viewBox="0 0 32 32"
+             fill="none" aria-hidden="true">
+          <rect class="study-flashcard__back-box" x="3" y="11" width="18" height="18" rx="4" stroke-width="2" />
+          <rect class="study-flashcard__front-box" x="11" y="3" width="18" height="18" rx="4" stroke-width="2" />
         </svg>
         <p class="flashcard__question study-flashcard__text" id="cardQuestion"></p>
         <p class="flashcard__answer study-flashcard__text" id="cardAnswer"></p>
