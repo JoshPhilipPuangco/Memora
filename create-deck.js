@@ -29,15 +29,82 @@ function loadDecks() {
     }
 }
 
+// ---- Error message ----
+// Only one field is flagged at a time. The message is a .form-error line
+// added at the bottom of that field's .form-field, so it shows right under
+// the empty box.
+let flaggedField = null;
+let flaggedMessage = null;
+
+function showError(field, message) {
+    flaggedField = field;
+    flaggedField.classList.add("is-invalid");
+
+    flaggedMessage = document.createElement("p");
+    flaggedMessage.classList.add("form-error");
+    flaggedMessage.textContent = message;
+    flaggedField.parentElement.appendChild(flaggedMessage);
+
+    // Scrolls the box into view if it is off-screen and puts the cursor in it.
+    flaggedField.focus();
+}
+
+function clearError() {
+    if (flaggedField) {
+        flaggedField.classList.remove("is-invalid");
+        flaggedMessage.remove();
+        flaggedField = null;
+        flaggedMessage = null;
+    }
+}
+
+// Shows the error for the first empty field (title, then each card's
+// question and answer in page order). Returns true if one was found.
+function showFirstEmptyField() {
+    if (deckTitleInput.value.trim() === "") {
+        showError(deckTitleInput, "Please enter a deck title.");
+        return true;
+    }
+
+    const cardBlocks = cardsContainer.querySelectorAll(".card-block");
+
+    for (let i = 0; i < cardBlocks.length; i++) {
+        const textareas = cardBlocks[i].querySelectorAll("textarea");
+
+        if (textareas[0].value.trim() === "") {
+            showError(textareas[0], "Please fill in the question for card " + (i + 1) + ".");
+            return true;
+        }
+
+        if (textareas[1].value.trim() === "") {
+            showError(textareas[1], "Please fill in the answer for card " + (i + 1) + ".");
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // ---- Cards ----
+// Every saved card has a unique id, so Study Mode can save a mark onto the
+// right card even if the cards were edited in another tab. The position is in
+// the id because cards saved in the same millisecond share the time.
+// study-decks.js builds ids in the same format (giveCardsIds). The pages share
+// no JS file, so keep the two in sync by hand.
+function makeCardId(position) {
+    return "card_" + Date.now() + "_" + position + "_" + Math.floor(Math.random() * 10000);
+}
+
 // Builds one Question/Answer block. Text goes in through .value (never
-// innerHTML) because it is typed by the user.
-function createCardBlock(question, answer, reviewed) {
+// innerHTML) because it is typed by the user. An existing card brings its id
+// (kept in data-id so saving keeps it); a new card has none until it is saved.
+function createCardBlock(question, answer, reviewed, id) {
     cardNumber++;
 
     const newDiv = document.createElement("div");
     newDiv.classList.add("card-block");
     newDiv.setAttribute("data-reviewed", reviewed ? "true" : "false");
+    newDiv.setAttribute("data-id", id || "");
 
     newDiv.innerHTML = `
         <div class="form-field">
@@ -87,12 +154,12 @@ if (editingDeckId) {
         cardsContainer.innerHTML = "";
         const cards = Array.isArray(deck.cards) ? deck.cards : [];
         cards.forEach(function(card) {
-            createCardBlock(card.question, card.answer, card.reviewed);
+            createCardBlock(card.question, card.answer, card.reviewed, card.id);
         });
 
         // A deck with no cards still needs one block to type into.
         if (cards.length === 0) {
-            createCardBlock("", "", false);
+            createCardBlock("", "", false, "");
         }
     } else {
         // Unknown id (deleted deck, old link): behave like a new deck.
@@ -102,7 +169,7 @@ if (editingDeckId) {
 
 // AdD
 addCardButton.addEventListener("click", function() {
-    createCardBlock("", "", false);
+    createCardBlock("", "", false, "");
 });
 
 // CaNCEL
@@ -113,14 +180,27 @@ cancelButton.addEventListener("click", function() {
 // SuBMIT
 createDeckForm.addEventListener("submit", function(event) {
     event.preventDefault();
+    clearError();
+
+    // Nothing is saved while a title, question, or answer is empty.
+    if (showFirstEmptyField()) {
+        return;
+    }
 
     // Same deck shape and storage key that my-decks.js reads.
     const cards = [];
     const cardBlocks = cardsContainer.querySelectorAll(".card-block");
 
-    cardBlocks.forEach(function(block) {
+    cardBlocks.forEach(function(block, i) {
         const textareas = block.querySelectorAll("textarea");
+        // Keep the card's id; a new card (or an old one saved before cards
+        // had ids) gets one now.
+        let cardId = block.getAttribute("data-id");
+        if (cardId === "") {
+            cardId = makeCardId(i);
+        }
         cards.push({
+            id: cardId,
             question: textareas[0].value.trim(),
             answer: textareas[1].value.trim(),
             reviewed: block.getAttribute("data-reviewed") === "true"
@@ -160,7 +240,16 @@ cardsContainer.addEventListener("click", function(event) {
     if (event.target.classList.contains("remove-card")) {
         // A deck needs at least one card.
         if (cardsContainer.querySelectorAll(".card-block").length > 1) {
+            // Removing a card shifts the card numbers, so drop the error.
+            clearError();
             event.target.parentElement.remove();
         }
+    }
+});
+
+// Typing in the flagged field clears its red border and the error message.
+createDeckForm.addEventListener("input", function(event) {
+    if (event.target === flaggedField) {
+        clearError();
     }
 });
