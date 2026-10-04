@@ -150,7 +150,8 @@ img {
 
 /* --- Nav bar --- */
 /* Logged out: Home, Log In / Sign Up — logo only.
-   Logged in: My Decks, Create Deck, Study Mode — logo + account link. */
+   Logged in: Create Deck, Study Mode — logo only.
+   Logged in: My Decks — logo + account link (the only page with Log Out). */
 .nav-bar {
   display: flex;
   align-items: center;
