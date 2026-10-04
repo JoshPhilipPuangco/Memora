@@ -16,6 +16,13 @@
   justify-content: flex-start;
 }
 
+/* Same override problem as .login-panel below: the flex rule above beats the
+   browser's [hidden] default. login.js hides the page this way while it
+   sends a logged-in user on to My Decks, so the form never shows. */
+.login-main[hidden] {
+  display: none;
+}
+
 .login-card {
   display: flex;
   flex-direction: column;
