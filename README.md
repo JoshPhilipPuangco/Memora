@@ -59,7 +59,6 @@ Each page loads `shared.css` plus its own page-specific CSS file. `style.css` an
 | #   | Issue                                                                                                                                                                                                 | Next step                                                                                                                    |
 | --- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | 1   | Create Deck and Study can still be opened directly by URL without logging in first. (My Decks already checks.)                                                                                       | Add the same login check at the top of each of those pages' JavaScript.                                                      |
-| 2   | Log In / Sign Up does not check for a logged-in user. Pressing Back from My Decks shows the Log In form again, even though the user is still logged in. | Check for the current user in `login.js` and send a logged-in user to My Decks (also when the Back button restores the page). |
 
 ## AI use
 

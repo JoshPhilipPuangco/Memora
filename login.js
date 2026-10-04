@@ -1,5 +1,8 @@
 'use strict';
 
+const USER_KEY = 'currentUser'; // read by my-decks.js
+
+const loginMain = document.querySelector('.login-main');
 const tabLogin = document.getElementById('tab-login');
 const tabSignup = document.getElementById('tab-signup');
 const loginForm = document.getElementById('login-form');
@@ -114,7 +117,16 @@ function saveAccount(username, email, password) {
 }
 
 function setCurrentUser(email) {
-  localStorage.setItem('currentUser', JSON.stringify({ email: email }));
+  localStorage.setItem(USER_KEY, JSON.stringify({ email: email }));
+}
+
+function isLoggedIn() {
+  try {
+    return localStorage.getItem(USER_KEY) !== null;
+  } catch (err) {
+    console.error('Could not read the current user from storage:', err);
+    return false;
+  }
 }
 
 function showError(errorElement, message) {
@@ -197,4 +209,15 @@ tabSignup.addEventListener('click', () => showTab('signup'));
 loginForm.addEventListener('submit', handleLogin);
 signupForm.addEventListener('submit', handleSignup);
 
-initTabFromHash();
+// 'pageshow' fires on the first load AND when the Back button restores the
+// page from the browser's cache without re-running this script. A logged-in
+// user is sent on to My Decks either way.
+window.addEventListener('pageshow', () => {
+  if (isLoggedIn()) {
+    loginMain.hidden = true;
+    window.location.href = 'my-decks.html';
+  } else {
+    loginMain.hidden = false;
+    initTabFromHash();
+  }
+});
