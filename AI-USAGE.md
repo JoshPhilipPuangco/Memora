@@ -1,15 +1,6 @@
 # AI usage
 
-This project was built with AI assistance. This file is the record of it. It is
-graded as the finals badge, and it is worth 100 points.
-
-Start it in week 1 and keep it up as you go. The commit history of this file is
-part of the evidence: a file written all at once the night before the deadline
-looks exactly like what it is.
-
 ## 1. How I used AI
-
-At least six entries. One per real use. Every entry needs a commit link.
 
 ### 2026-09-22 - Home page build and review
 
@@ -68,9 +59,6 @@ At least six entries. One per real use. Every entry needs a commit link.
 
 ## 2. Where the AI got it wrong
 
-Three cases. Be specific. If you write that the AI was never wrong, this section
-scores zero.
-
 ### Case 1 - Said the My Decks JavaScript followed the course coverage, but it did not
 
 - **What it gave me:** When Claude built the My Decks page, it told me its JavaScript stayed "within Modules 8 to 11 or the existing code". The version of my-decks.js it wrote used createElement, className, append, appendChild, the hidden property, Boolean(), encodeURIComponent() and a self-running function wrapper around the whole file. Claude did not point any of this out. I found it myself by reading through my-decks.js by hand and comparing what it used with the Concept Coverage files, and those calls are not in them.
@@ -86,12 +74,6 @@ scores zero.
 - **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/3d47d68d809d4aa299c246e1aba3edb6a1fe03cb
 
 ## 3. Who wrote what
-
-At least a fifth of this project is code you wrote yourself. Name it, and explain
-it in your own words.
-
-> Group projects: give each member their own heading below, and use your GitHub
-> handle as the heading. You are graded on your own section.
 
 ### JoshPhilipPuangco
 
