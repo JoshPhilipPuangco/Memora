@@ -87,6 +87,18 @@
 
   Both forms have the novalidate attribute, which turns off the browser's own pop-up validation, so the JavaScript file the AI wrote mostly (login.js) is the only thing that checks the input and shows error text. Every input, form, and error paragraph has an id, because login.js finds them with getElementById and uses them to read what the user typed and to save or check the account in localStorage. If an id here is changed without changing login.js to match, the matching lookup in login.js would stop working. Lastly, the novalidate attribute and the hidden attribute are not in Module 5 (Tables and Forms), which only covers required, type, pattern, minlength, and maxlength for the browser's built in validation. These two were not discussed in class, so outside research on MDN was needed to learn what they do and how to use them.
 
+##### My Decks page markup and layout
+
+- **Files:**
+  - Memora/my-decks.html
+  - Memora/my-decks.css
+- **Commit:** [ab5ab77](https://github.com/JoshPhilipPuangco/Memora/commit/ab5ab7759131727d2d76a51a1e694f765e3552fc)
+- **What it does and why it is built this way:** my-decks.html is the markup for the My Decks page. It keeps the same header, main, and footer structure as the Home page. Almost nothing is written inside it. It has the heading, an empty div for the header button (mydecksHeaderAction), one empty section for the deck cards (mydecksContent, labeled "Your decks"), and an empty div for the delete confirmation (mydecksModalRoot). my-decks.js finds these three by id and fills them, so the page can show cards, the empty message, or the modal without hidden copies in the HTML. If one of these ids changes and my-decks.js does not, the lookup returns nothing, the script throws an error, and the page stays empty.
+
+  my-decks.css only holds the layout around the shared .deck-card style, and it uses the variables from shared.css, such as --space-standard and --error, instead of fixed numbers. The deck list is one column at every width, like the wireframe. The title link is a stretched link: its ::after is placed over the whole card with position: absolute and inset: 0, so clicking anywhere on the card opens Study Mode. The Edit and Delete row sits above it with z-index: 1. That row has pointer-events: none and its buttons have pointer-events: auto, so the empty space beside the buttons still opens the deck. Without that, the row blocks the click. On phones the buttons are at least 44px tall, and from 768px up they go back to their natural size. The modal overlay is position: fixed over the whole page with a dark background. A few things in this file are not in the Concept Coverage files: position, inset, z-index, ::after, pointer-events, and :focus-visible. I added them because they are essential to this page, and I understand how they work through outside research.
+
+  The two files work together with my-decks.js. my-decks.js fills the three empty spots in my-decks.html and writes the cards with the class names that my-decks.css styles, such as mydecks-card, mydecks-card__link, mydecks-card__actions, and mydecks-card__delete. The CSS depends on that structure. The stretched link only covers the whole card because the link sits inside an article that has position: relative, and the Edit and Delete row only stays clickable because it sits above that link. If a class name or an id changes in one file and not in the others, the styling, the whole-card click, or the page itself would stop working.
+
 #### The AI-written part I understand best
 
 ##### Login/Signup validation and tab logic
