@@ -37,14 +37,13 @@ Memora/
 ├── index.html, login.html, create-deck.html, my-decks.html, study-decks.html
 ├── shared.css (site-wide styles) + one CSS file per page
 ├── login.js, create-deck.js, my-decks.js, study-decks.js (one JS file per interactive page)
-├── style.css, script.js (unused repo template leftovers)
 ├── assets/
 │   ├── Home-Page-Image.png (hero image on the Home page)
 │   └── screenshots/ (README screenshots)
 └── .github/ (CODEOWNERS + GitHub Pages deploy workflow)
 ```
 
-Each page loads `shared.css` plus its own page-specific CSS file. `style.css` and `script.js` are confirmed leftovers from the repo template. Neither is linked from any page and neither will be used going forward.
+Each page loads `shared.css` plus its own page-specific CSS file.
 
 ## 5. Screenshots
 
