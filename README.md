@@ -38,7 +38,9 @@ Memora/
 ├── shared.css (site-wide styles) + one CSS file per page
 ├── login.js, create-deck.js, my-decks.js, study-decks.js (one JS file per interactive page)
 ├── style.css, script.js (unused repo template leftovers)
-├── assets/screenshots/ (README screenshots)
+├── assets/
+│   ├── Home-Page-Image.png (hero image on the Home page)
+│   └── screenshots/ (README screenshots)
 └── .github/ (CODEOWNERS + GitHub Pages deploy workflow)
 ```
 
