@@ -81,7 +81,7 @@
 
 ##### Login/Signup page markup
 
-- **File:** Memora/login.html
+- **File:** `login.html`
 - **Commit:** [ef717c4](https://github.com/JoshPhilipPuangco/Memora/commit/ef717c4599e870d2a027a74067d2236730ad841a) (This commit holds both files. login.html is the one I wrote. Claude is listed as co-author because login.js in the same commit was mostly AI-written.)
 - **What it does and why it is built this way:** This file is the HTML for the Login and Sign Up page. It is one page with two forms inside it, a login form and a signup form, instead of two separate pages. A pair of buttons at the top, the tab switcher, show one form and hide the other, using the hidden attribute, so the user never sees both at once and the page never reloads when they switch. Each form has a short note that says which fields are required, labels with a red asterisk on each required field, and an empty paragraph where an error message can be shown. The signup form also has a short helper line under each field that explains the rule for that field, such as the minimum length for the password.
 
@@ -90,8 +90,8 @@
 ##### My Decks page markup and layout
 
 - **Files:**
-  - Memora/my-decks.html
-  - Memora/my-decks.css
+  - `my-decks.html`
+  - `my-decks.css`
 - **Commit:** [ab5ab77](https://github.com/JoshPhilipPuangco/Memora/commit/ab5ab7759131727d2d76a51a1e694f765e3552fc) (This commit also holds my-decks.js and create-deck.js. my-decks.html and my-decks.css are the files I wrote. Claude is listed as co-author because of my-decks.js and create-deck.js.)
 - **What it does and why it is built this way:** my-decks.html is the markup for the My Decks page. It keeps the same header, main, and footer structure as the Home page. Almost nothing is written inside it. It has the heading, an empty div for the header button (mydecksHeaderAction), one empty section for the deck cards (mydecksContent, labeled "Your decks"), and an empty div for the delete confirmation (mydecksModalRoot). my-decks.js finds these three by id and fills them, so the page can show cards, the empty message, or the modal without hidden copies in the HTML. If one of these ids changes and my-decks.js does not, the lookup returns nothing, the script throws an error, and the page stays empty.
 
@@ -103,7 +103,7 @@
 
 ##### Login/Signup validation and tab logic
 
-- **File:** Memora/login.js
+- **File:** `login.js`
 - **Commit:** [ef717c4](https://github.com/JoshPhilipPuangco/Memora/commit/ef717c4599e870d2a027a74067d2236730ad841a)
 - **What it does and why we kept it:** This file is the JavaScript for the Login and Sign Up page. It finds the tab buttons, the two forms, the two error paragraphs, and all five inputs by id. The showTab function switches the class on the tab buttons and the hidden property on the two forms, so only one form shows at a time, and it clears both error messages every time the tab changes.
 
@@ -117,7 +117,7 @@
 
 ##### Create Deck page script
 
-- **File:** The JavaScript file for the Create Deck page
+- **File:** `create-deck.js`
 - **Commit:** [3d47d68](https://github.com/JoshPhilipPuangco/Memora/commit/3d47d68d809d4aa299c246e1aba3edb6a1fe03cb)
 - **What it does and why it is built this way:** This script runs the Create Deck page. At the top it finds the form, the Add another card button, the card container, and the Cancel button by their ids. A counter called cardNumber starts at 1, because the first card is already written in the HTML. When I click Add another card, the counter goes up and the script builds a new card block with a Question box and an Answer box. Each box gets an id with the counter in it, like question-2 and answer-2. I did this because every label must match the id of its own box, and two boxes cannot have the same id. The new block also has a Remove Card button. The first card has no remove button on purpose, so a deck always has at least one card. For removing, I put one click listener on the container that holds all the cards, instead of one on each button. The buttons for new cards do not exist when the page loads, so a listener on each one would miss them. The listener checks if the thing I clicked has the remove-card class, and if it does, it removes that card block. Cancel sends the user back to the last page with history.back(). On submit, event.preventDefault() stops the page from reloading, and the user is sent to the My Decks page.
 
@@ -125,7 +125,7 @@
 
 ##### Study Mode deck loading and flashcard logic
 
-- **File:** The JavaScript file for the Study Mode page
+- **File:** `create-deck.js`
 - **Commit:** [3d47d68](https://github.com/JoshPhilipPuangco/Memora/commit/3d47d68d809d4aa299c246e1aba3edb6a1fe03cb)
 - **What it does and why we kept it:** This script runs the Study Mode page. When the page loads, the init function reads the deck id from the URL with URLSearchParams, because the Study button on My Decks sends the id in the link. It loads the list of decks from localStorage under the key `memora_decks` with JSON.parse, and uses find to get the deck with that id. If there is no id, no deck, or the deck has no cards, the showMessage function hides the flashcard and the buttons and shows a short message, so the page does not break.
 
