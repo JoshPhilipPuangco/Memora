@@ -13,17 +13,78 @@
   </header>
 
   <main class="page-container home-main">
-    <section class="home-hero">
-      <h1 class="home-hero__title">Memora</h1>
-      <p class="home-hero__intro">
-        Memora is a free flashcard site built for college students. Make your
-        own decks, flip through them to study, and keep track of what you've
-        reviewed and what's left — no paper cards, no subscription.
-      </p>
-      <div class="button-pair">
-        <a class="btn-secondary" href="login.html">Log In</a>
-        <a class="btn-primary" href="login.html#signup">Sign Up</a>
+    <section class="home-hero" aria-labelledby="home-title">
+      <div class="home-hero__content">
+        <h1 class="home-hero__title" id="home-title">Study smarter with Memora.</h1>
+        <p class="home-hero__intro">
+          Memora is a free flashcard site built for college students. Make
+          your own decks, flip through them to study, and keep track of what
+          you've reviewed and what's left — no paper cards, no subscription.
+        </p>
+        <div class="button-pair">
+          <a class="btn-secondary" href="login.html">Log In</a>
+          <a class="btn-primary" href="login.html#signup">Sign Up</a>
+        </div>
       </div>
+      <img
+        class="home-hero__image"
+        src="assets/Home-Page-Image.png"
+        width="1200"
+        height="726"
+        alt="Memora on a laptop and a phone, next to a stack of colorful decks."
+      />
+    </section>
+
+    <section aria-label="What Memora offers">
+      <ul class="home-features">
+        <li class="home-card">
+          <span class="home-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+              <rect x="3" y="3" width="14" height="10" rx="2" />
+              <rect x="5" y="7" width="14" height="10" rx="2" />
+              <rect x="7" y="11" width="14" height="10" rx="2" />
+            </svg>
+          </span>
+          <div class="home-card__body">
+            <h2 class="home-card__title">Create Decks</h2>
+            <p class="home-card__text">
+              Build your own decks of question and answer cards, and edit or
+              delete them any time.
+            </p>
+          </div>
+        </li>
+
+        <li class="home-card">
+          <span class="home-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round">
+              <path d="M13 2 4 14h7l-1 8 9-12h-7z" />
+            </svg>
+          </span>
+          <div class="home-card__body">
+            <h2 class="home-card__title">Active Recall</h2>
+            <p class="home-card__text">
+              Flip each card to test yourself, then mark it reviewed or not
+              yet reviewed.
+            </p>
+          </div>
+        </li>
+
+        <li class="home-card">
+          <span class="home-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="9" opacity="0.25" />
+              <path d="M12 3a9 9 0 0 1 9 9" />
+            </svg>
+          </span>
+          <div class="home-card__body">
+            <h2 class="home-card__title">Track Progress</h2>
+            <p class="home-card__text">
+              See how many cards are reviewed and how many are left, deck by
+              deck.
+            </p>
+          </div>
+        </li>
+      </ul>
     </section>
   </main>
 

@@ -2,23 +2,34 @@
    MEMORA — HOME PAGE
    Page-specific rules only. Classes are prefixed .home-* so they never
    collide with shared.css or another page's stylesheet.
+   Layout: hero (text + image) on top, three feature cards below.
+   Mobile-first; 768px matches shared.css, 1024px adds the full-size heading
+   and the three-card row.
    ========================================================================== */
 
 .home-main {
   display: flex;
   flex-direction: column;
-}
-
-.home-hero {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: stretch;
-  text-align: center;
   gap: var(--space-standard);
   padding-top: var(--space-standard);
   padding-bottom: var(--space-standard);
+}
+
+
+/* --- Hero --- */
+
+.home-hero {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-standard);
+}
+
+.home-hero__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-standard);
+  text-align: center;
 }
 
 .home-hero__title {
@@ -26,23 +37,130 @@
 }
 
 .home-hero__intro {
+  margin: 0;
   font-size: 18px;
-  color: var(--text);
 }
 
+.home-hero__image {
+  display: block;
+  width: 100%;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.12))
+    drop-shadow(0 16px 24px rgba(0, 0, 0, 0.16));
+}
+
+
+/* --- Feature cards --- */
+
+.home-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-standard);
+}
+
+.home-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border-grey);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: box-shadow var(--transition-fast);
+}
+
+.home-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.home-card__icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--bg);
+  border: 1px solid var(--border-grey);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+}
+
+.home-card__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.home-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-tight);
+}
+
+.home-card__title {
+  font-size: 18px;
+}
+
+.home-card__text {
+  margin: 0;
+  font-size: var(--font-size-small);
+}
+
+
+/* --- 768px and up --- */
+
 @media (min-width: 768px) {
+  .home-main {
+    gap: 56px;
+    padding-top: 56px;
+    padding-bottom: 56px;
+  }
+
   .home-hero {
+    flex-direction: row;
     align-items: center;
-    padding-top: 72px;
-    padding-bottom: 72px;
+    gap: 56px;
+  }
+
+  .home-hero__content {
+    flex: 1;
+    text-align: left;
+  }
+
+  .home-hero__title {
+    font-size: 48px;
+  }
+
+  .home-hero__intro {
+    font-size: 22px;
+  }
+
+  .home-hero .button-pair {
+    justify-content: flex-start;
+  }
+
+  .home-hero__image {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+
+/* --- 1024px and up: room for the 64px heading and three cards in a row --- */
+
+@media (min-width: 1024px) {
+  .home-hero__image {
+    flex: 1.4;
   }
 
   .home-hero__title {
     font-size: 64px;
   }
 
-  .home-hero__intro {
-    max-width: 60ch;
-    font-size: 22px;
+  .home-features {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
