@@ -130,3 +130,33 @@
 - **What it does and why we kept it:** This script runs the Study Mode page. When the page loads, the init function reads the deck id from the URL with URLSearchParams, because the Study button on My Decks sends the id in the link. It loads the list of decks from localStorage under the key `memora_decks` with JSON.parse, and uses find to get the deck with that id. If there is no id, no deck, or the deck has no cards, the showMessage function hides the flashcard and the buttons and shows a short message, so the page does not break.
 
   If the deck has cards, the page shows one card at a time. Clicking the card or pressing Enter or Space runs flipCard, which adds or removes the is-flipped class. The Mark Reviewed and Mark Not Yet Reviewed buttons run setReviewed, which changes the card, saves all the decks back to localStorage with JSON.stringify, and updates the progress text. The Previous and Next buttons run goTo, which changes the card number and shows the new card. We kept this script because it keeps the JavaScript out of the HTML, it reads real deck data, and I can follow it from the click on My Decks to the card on screen. 
+
+### CharlesM-27
+
+#### Written by me
+
+##### Create Deck HTML
+
+- **File:** `create-deck.html`
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **What it does and why it is built this way:** This file creates the Create Deck page structure. It contains the deck title field, question and answer fields, card container, and buttons. It reuses the shared classes from `shared.css` and uses Create Deck-specific classes where needed.
+
+##### Create Deck CSS
+
+- **File:** `create-deck.css`
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **What it does and why it is built this way:** This file contains styling specific to the Create Deck page. It controls the title alignment, form layout, and textarea size while leaving reusable component styles in `shared.css`.
+
+##### Create Deck JavaScript
+
+- **File:** `create-deck.js`
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **What it does and why it is built this way:** This file provides the page interactions. It adds new cards, gives their fields unique numbers, removes cards, handles Cancel, and prevents the form from reloading the page when submitted.
+
+#### The AI-written part I understand best
+
+##### Dynamic Card Creation
+
+- **File:** `create-deck.js`
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **What it does and why we kept it:** The JavaScript creates new card sections when Add another card is clicked. The `cardNumber` variable increases so each new question and answer gets a unique ID. The Remove Card event listener allows dynamically created cards to be removed. I tested these functions in the browser and understand how the event listeners, DOM elements, and card container work together.
