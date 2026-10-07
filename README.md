@@ -64,8 +64,6 @@ Found in a review of the live site against the Final Project rubric. Each issue 
 | #   | Issue                                                                                                                                                                                                                          | Where                                              | Severity   |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ---------- |
 | 5   | `create-deck.html` does not follow the `index.html` reference style: different indentation, trailing whitespace on 6 lines, a typo in a comment ("buttonss"), and no `/>` on void tags like the other four pages.              | `create-deck.html`                                 | Low        |
-| 8   | The Study Mode message says "press Study on a deck", but there is no Study button. The deck title is the link.                                                                                                                 | `study-decks.js`                                   | Low        |
-| 9   | Cancel uses `history.back()`, so in a fresh tab it sends the user to a blank page instead of My Decks. Passwords are trimmed, which silently removes leading and trailing spaces. My Decks does not hide the page while it redirects a logged-out visitor, unlike the other pages. | `create-deck.js`, `login.js`, `my-decks.js`        | Low        |
 | 10  | The proposal lists sample decks (at least two subjects) and sample user info for a demo. Neither exists, so a first-time visitor sees an empty My Decks, and the README has no demo walkthrough.                                | README, site content                               | Medium     |
 | 11  | The proposal lists a logo, but the nav bar shows the plain text "Memora". The footer is only "&copy; 2026 Memora". The site also has no favicon, so every page load requests `/favicon.ico` and gets a 404.                    | all pages, `assets/`                               | Low        |
 | 12  | Duplicated code across the JavaScript files: `isLoggedIn()` is the same in 4 files, `loadDecks()` is in 3, and the card ID format is repeated in `create-deck.js` and `study-decks.js` with a note to "keep in sync by hand". | `login.js`, `my-decks.js`, `create-deck.js`, `study-decks.js` | Medium     |
@@ -74,17 +72,16 @@ Found in a review of the live site against the Final Project rubric. Each issue 
 
 ### Fix sessions
 
-Each session is one branch and one pull request. Some sessions edit the same files, so merge them in this order: 3, 4, 5, 6, 7 (sessions 1 and 2 are done and merged). Session 7 touches no files the others edit, so it can go at any time.
+Each session is one branch and one pull request. Some sessions edit the same files, so merge them in this order: 4, 5, 6, 7 (sessions 1 to 3 are done and merged). Session 7 touches no files the others edit, so it can go at any time.
 
 | Session | Issues  | Theme                                | Files                                                                          |
 | ------- | ------- | ------------------------------------ | ------------------------------------------------------------------------------ |
-| 3       | 8, 9    | Small behavior and wording fixes (JS) | `study-decks.js`, `create-deck.js`, `login.js`, `my-decks.js`                  |
 | 4       | 10, 11  | Demo content and branding            | README, `assets/`, nav bar and footer in all pages                              |
 | 5       | 12      | Move the shared JavaScript into one file | new shared JS file, all four JS files, all four HTML pages that load them   |
 | 6       | 5, 13   | Formatting and style consistency     | `create-deck.html`, all JS files, `create-deck.css`                             |
 | 7       | 14      | Repo hygiene                         | `.gitignore`, README project structure                                          |
 
-Notes: Sessions 3, 5 and 6 all edit the JavaScript files, and sessions 4 and 6 both edit the HTML pages. Start each one only after the one before it is merged, so none of them has merge conflicts.
+Notes: Sessions 5 and 6 both edit the JavaScript files, and sessions 4 and 6 both edit the HTML pages. Start each one only after the one before it is merged, so none of them has merge conflicts.
 
 ## AI use
 
