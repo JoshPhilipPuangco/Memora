@@ -73,6 +73,13 @@
 - **What I did instead:** I asked Claude to rewrite the Study Mode script so it only uses methods that are in the Concept Coverage files. It took out the self-running function wrapper, the hidden property, Array.isArray, and Date.now(), and the page now shows and hides its parts in a covered way. I checked the new script against the Concept Coverage files and tested the page in the browser.
 - **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/3d47d68d809d4aa299c246e1aba3edb6a1fe03cb
 
+### Case 3 - Incorrect card container scope
+
+- **What it gave me:** ChatGPT gave me an approach for adding and removing dynamically created cards, but the approach did not correctly target the existing `card-container`. The Create Deck page uses `card-container` to hold the card blocks, so the JavaScript needs to work with that existing container when adding or removing cards.
+- **What was wrong with it:** The approach did not correctly handle the existing `card-container`. If the script does not select the correct container, the new Question and Answer fields may not be added to the correct part of the form, and the Remove Card functionality may not work with dynamically created cards.
+- **What I did instead:** I selected the existing card container using `document.getElementById("card-container")` and stored it in `cardsContainer`. When adding a card, I used `cardsContainer.appendChild(newDiv)` to place the new card inside the correct container. For Remove Card, I used event delegation by adding one click listener to the card container and checking for the `remove-card` class. This allows the same listener to work with Remove Card buttons created dynamically. I tested both Add Card and Remove Card in the browser.
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/7a9c6c03e15e63be649c89fb380a41d90fd649cc
+
 ## 3. Who wrote what
 
 ### JoshPhilipPuangco
@@ -138,19 +145,19 @@
 ##### Create Deck HTML
 
 - **File:** `create-deck.html`
-- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/7a9c6c03e15e63be649c89fb380a41d90fd649cc
 - **What it does and why it is built this way:** This file creates the structure of the Create Deck page that I worked on for Memora. It contains the deck title field, the first Question and Answer fields, the card container, and the buttons for Add another card, Create Deck, and Cancel. The first card is written directly in the HTML so that a card is already visible when the page loads, while the card container gives the JavaScript a place to add additional cards. The Question and Answer fields use labels connected to their fields through matching `for` and `id` attributes, and the fields use `required` so the browser checks that the required fields are not left empty. I reused the shared classes from `shared.css` for common components such as form fields, cards, and buttons, while using Create Deck-specific classes for styling that only applies to this page.
 
 ##### Create Deck CSS
 
 - **File:** `create-deck.css`
-- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/7a9c6c03e15e63be649c89fb380a41d90fd649cc
 - **What it does and why it is built this way:** This file contains the styling specific to the Create Deck page. The `.create-deck-title` rule controls the alignment of the page heading. The `.create-deck-form` uses Flexbox with `flex-direction: column` so the form elements are arranged vertically, and the `gap` property adds space between them. The textarea rule gives the Question and Answer fields a minimum height and uses `resize: vertical` so the user can make the fields taller when entering longer text. I also kept the reusable component styles in `shared.css` instead of duplicating them in this file so the Create Deck page follows the same design system as the other pages.
 
 ##### Create Deck JavaScript
 
 - **File:** `create-deck.js`
-- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/7a9c6c03e15e63be649c89fb380a41d90fd649cc
 - **What it does and why it is built this way:** This file provides the interactive behavior for the Create Deck page. At the beginning, it finds the Create Deck form, Add another card button, card container, and Cancel button so the JavaScript can interact with the HTML elements. A variable called `cardNumber` starts at 1 because the first card is already written in the HTML. When Add another card is clicked, the counter increases and the script creates a new card block containing a Question field, an Answer field, and a Remove Card button. The Question and Answer fields use the card number in their IDs so the dynamically created fields have different IDs. The script also handles removing cards, uses `history.back()` for Cancel, and uses `event.preventDefault()` when the form is submitted so the browser does not perform its normal form submission and reload the page.
 
 #### The AI-written part I understand best
@@ -158,5 +165,5 @@
 ##### Dynamic Card Creation
 
 - **File:** `create-deck.js`
-- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/c34cc32
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/7a9c6c03e15e63be649c89fb380a41d90fd649cc
 - **What it does and why we kept it:** The dynamic card creation is the part of the JavaScript that I understand best. When Add another card is clicked, the `cardNumber` variable increases and the script creates a new `div` for the card. It gives the new element the `card-block` class and uses `innerHTML` to add the Question field, Answer field, and Remove Card button. The card number is included in the IDs, such as `question-2` and `answer-2`, so the new fields do not reuse the IDs from the first card. The new card is then added to the existing `card-container` using `appendChild`. For removing cards, the script uses a click listener on the card container and checks whether the clicked element has the `remove-card` class. If it does, the corresponding card is removed. I tested the Add Card and Remove Card functions in the browser and worked through how the event listeners, DOM elements, card number, dynamic IDs, and card container work together. This is the AI-assisted part I am most comfortable explaining because I understand what each part is doing and how the pieces connect to the HTML.
