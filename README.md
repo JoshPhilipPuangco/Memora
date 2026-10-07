@@ -64,8 +64,6 @@ Found in a review of the live site against the Final Project rubric. Each issue 
 | #   | Issue                                                                                                                                                                                                                          | Where                                              | Severity   |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ---------- |
 | 5   | `create-deck.html` does not follow the `index.html` reference style: different indentation, trailing whitespace on 6 lines, a typo in a comment ("buttonss"), and no `/>` on void tags like the other four pages.              | `create-deck.html`                                 | Low        |
-| 6   | Helper text (`--text-muted`, #6E7175) on the page background (#F1EFEA) has a 4.27:1 contrast ratio, below the 4.5:1 WCAG AA minimum. It affects the Sign Up helper text and the My Decks empty message. A fix may need `shared.css`. | `shared.css`, `login.css`, `my-decks.css`          | Medium-low |
-| 7   | The Log Out link is only 18px tall on a phone, while the other controls use 44px touch targets.                                                                                                                                | `my-decks.css`, `shared.css`                       | Low        |
 | 8   | The Study Mode message says "press Study on a deck", but there is no Study button. The deck title is the link.                                                                                                                 | `study-decks.js`                                   | Low        |
 | 9   | Cancel uses `history.back()`, so in a fresh tab it sends the user to a blank page instead of My Decks. Passwords are trimmed, which silently removes leading and trailing spaces. My Decks does not hide the page while it redirects a logged-out visitor, unlike the other pages. | `create-deck.js`, `login.js`, `my-decks.js`        | Low        |
 | 10  | The proposal lists sample decks (at least two subjects) and sample user info for a demo. Neither exists, so a first-time visitor sees an empty My Decks, and the README has no demo walkthrough.                                | README, site content                               | Medium     |
@@ -76,11 +74,10 @@ Found in a review of the live site against the Final Project rubric. Each issue 
 
 ### Fix sessions
 
-Each session is one branch and one pull request. Some sessions edit the same files, so merge them in this order: 2, 3, 4, 5, 6, 7 (session 1 is done and merged). Sessions 2 and 7 touch no files the others edit, so they can go at any time.
+Each session is one branch and one pull request. Some sessions edit the same files, so merge them in this order: 3, 4, 5, 6, 7 (sessions 1 and 2 are done and merged). Session 7 touches no files the others edit, so it can go at any time.
 
 | Session | Issues  | Theme                                | Files                                                                          |
 | ------- | ------- | ------------------------------------ | ------------------------------------------------------------------------------ |
-| 2       | 6, 7    | Contrast and touch target (CSS)      | `login.css`, `my-decks.css`, and `shared.css` only if approved                  |
 | 3       | 8, 9    | Small behavior and wording fixes (JS) | `study-decks.js`, `create-deck.js`, `login.js`, `my-decks.js`                  |
 | 4       | 10, 11  | Demo content and branding            | README, `assets/`, nav bar and footer in all pages                              |
 | 5       | 12      | Move the shared JavaScript into one file | new shared JS file, all four JS files, all four HTML pages that load them   |
