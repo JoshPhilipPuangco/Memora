@@ -186,7 +186,7 @@ addCardButton.addEventListener("click", function() {
 
 // CaNCEL
 cancelButton.addEventListener("click", function() {
-    history.back();
+    window.location.href = "my-decks.html";
 });
 
 // SuBMIT

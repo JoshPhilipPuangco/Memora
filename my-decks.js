@@ -24,6 +24,7 @@ const modalRoot = document.getElementById('mydecksModalRoot');
 const search = document.getElementById('mydecksSearch');
 const searchInput = document.getElementById('mydecksSearchInput');
 const logoutLink = document.getElementById('logoutLink');
+const pageMain = document.querySelector('.mydecks-main');
 
 // The deck the modal is currently about (null while the modal is closed).
 let activeDeckId = null;
@@ -216,12 +217,15 @@ document.addEventListener('keydown', (e) => {
 // ---- Init ----
 // 'pageshow' fires on the first load AND when the Back button restores the
 // page from the browser's cache without re-running this script. Redrawing
-// each time keeps the progress numbers current.
+// each time keeps the progress numbers current. Anyone who is not logged in
+// is sent to Log In, and the page is hidden meanwhile so the list never shows.
 window.addEventListener('pageshow', () => {
   if (isLoggedIn()) {
+    pageMain.hidden = false;
     closeModal();
     render();
   } else {
+    pageMain.hidden = true;
     window.location.href = 'login.html';
   }
 });
