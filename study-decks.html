@@ -17,19 +17,18 @@
     <div class="study-content">
       <a class="btn-secondary study-back" href="my-decks.html">&larr; Back to My Decks</a>
 
+      <div class="study-header" id="studyHeader">
+        <h1 id="deckTitle">Study Mode</h1>
+        <p class="helper-text" id="progressText" aria-live="polite"></p>
+        <p class="helper-text" id="roundText"></p>
+      </div>
+
       <!-- Shown by study-decks.js when there is no deck or no cards to study -->
       <div class="study-message" id="studyMessage" hidden>
         <p class="study-message__text" id="studyMessageText"></p>
       </div>
 
-      <div class="study-header" id="studyHeader">
-        <h1 id="deckTitle"></h1>
-        <p class="helper-text" id="progressText" aria-live="polite"></p>
-        <p class="helper-text" id="roundText"></p>
-      </div>
-
-      <div class="flashcard study-flashcard" id="flashcard" tabindex="0" role="button"
-           aria-label="Flashcard, click or press Enter to flip">
+      <div class="flashcard study-flashcard" id="flashcard" tabindex="0" role="button">
         <svg class="flashcard__flip-icon study-flashcard__side-icon" viewBox="0 0 32 32"
              fill="none" aria-hidden="true">
           <rect class="study-flashcard__back-box" x="3" y="11" width="18" height="18" rx="4" stroke-width="2" />

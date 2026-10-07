@@ -15,9 +15,11 @@
 
   <main class="page-container login-main">
     <div class="login-card">
+      <h1 class="login-title">Log In / Sign Up</h1>
+
       <div class="tab-switcher">
-        <button type="button" class="tab is-selected" id="tab-login" data-tab="login">Log In</button>
-        <button type="button" class="tab" id="tab-signup" data-tab="signup">Sign Up</button>
+        <button type="button" class="tab is-selected" id="tab-login" data-tab="login" aria-pressed="true">Log In</button>
+        <button type="button" class="tab" id="tab-signup" data-tab="signup" aria-pressed="false">Sign Up</button>
       </div>
 
       <form class="login-panel" id="login-form" data-panel="login" novalidate>

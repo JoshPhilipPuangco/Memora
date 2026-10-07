@@ -21,6 +21,8 @@ function showTab(name) {
 
   tabLogin.className = showingLogin ? 'tab is-selected' : 'tab';
   tabSignup.className = showingLogin ? 'tab' : 'tab is-selected';
+  tabLogin.setAttribute('aria-pressed', showingLogin ? 'true' : 'false');
+  tabSignup.setAttribute('aria-pressed', showingLogin ? 'false' : 'true');
 
   loginForm.hidden = !showingLogin;
   signupForm.hidden = showingLogin;
