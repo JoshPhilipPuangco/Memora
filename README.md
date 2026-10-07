@@ -59,7 +59,40 @@ Each page loads `shared.css` plus its own page-specific CSS file.
 
 ## 6. Known issues and next steps
 
-No known issues at the moment.
+Found in a review of the live site against the Final Project rubric. Each issue is fixed in a separate pull request, grouped into sessions below.
+
+| #   | Issue                                                                                                                                                                                                                          | Where                                              | Severity   |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ---------- |
+| 1   | Log In / Sign Up has no `<h1>`.                                                                                                                                                                                                | `login.html`                                       | Medium     |
+| 2   | The flashcard is a `<div role="button">` whose `aria-label` replaces its text, so a screen reader likely never announces the question or answer. The label also does not match the visible text.                               | `study-decks.html`                                 | Medium     |
+| 3   | The Log In and Sign Up tabs show which one is selected only through a CSS class. They have no `aria-selected` or `aria-pressed`.                                                                                               | `login.html`, `login.js`                           | Low        |
+| 4   | The `<h1>` in Study Mode is empty in the markup. When there is no deck to study, the header is hidden and the page has no `<h1>`.                                                                                              | `study-decks.html`, `study-decks.js`               | Low        |
+| 5   | `create-deck.html` does not follow the `index.html` reference style: different indentation, trailing whitespace on 6 lines, a typo in a comment ("buttonss"), and no `/>` on void tags like the other four pages.              | `create-deck.html`                                 | Low        |
+| 6   | Helper text (`--text-muted`, #6E7175) on the page background (#F1EFEA) has a 4.27:1 contrast ratio, below the 4.5:1 WCAG AA minimum. It affects the Sign Up helper text and the My Decks empty message. A fix may need `shared.css`. | `shared.css`, `login.css`, `my-decks.css`          | Medium-low |
+| 7   | The Log Out link is only 18px tall on a phone, while the other controls use 44px touch targets.                                                                                                                                | `my-decks.css`, `shared.css`                       | Low        |
+| 8   | The Study Mode message says "press Study on a deck", but there is no Study button. The deck title is the link.                                                                                                                 | `study-decks.js`                                   | Low        |
+| 9   | Cancel uses `history.back()`, so in a fresh tab it sends the user to a blank page instead of My Decks. Passwords are trimmed, which silently removes leading and trailing spaces. My Decks does not hide the page while it redirects a logged-out visitor, unlike the other pages. | `create-deck.js`, `login.js`, `my-decks.js`        | Low        |
+| 10  | The proposal lists sample decks (at least two subjects) and sample user info for a demo. Neither exists, so a first-time visitor sees an empty My Decks, and the README has no demo walkthrough.                                | README, site content                               | Medium     |
+| 11  | The proposal lists a logo, but the nav bar shows the plain text "Memora". The footer is only "&copy; 2026 Memora". The site also has no favicon, so every page load requests `/favicon.ico` and gets a 404.                    | all pages, `assets/`                               | Low        |
+| 12  | Duplicated code across the JavaScript files: `isLoggedIn()` is the same in 4 files, `loadDecks()` is in 3, and the card ID format is repeated in `create-deck.js` and `study-decks.js` with a note to "keep in sync by hand". | `login.js`, `my-decks.js`, `create-deck.js`, `study-decks.js` | Medium     |
+| 13  | Inconsistent code style: `study-decks.js` uses a function wrapper the other files do not, `create-deck.js` uses 4-space double quotes while the others use 2-space single quotes, `'use strict'` is in only 3 of 4 JS files, and some comments have typos ("AdD", "CaNCEL", "SuBMIT", "ReMOVE"). `shared.css` also has unused rules (`.heading`, `.text-small`, `.footer a`), which are left alone unless a change to `shared.css` is approved. | JS files, `create-deck.css`, `shared.css`          | Low        |
+| 14  | There is no `.gitignore`, so `.DS_Store` files could be committed by accident. The project structure section above leaves out `AI-USAGE.md`, the compiled increment reports, and `.nojekyll`.                                    | repo root, README                                  | Low        |
+
+### Fix sessions
+
+Each session is one branch and one pull request. Some sessions edit the same files, so merge them in this order: 1, 2, 3, 4, 5, 6, 7. Sessions 2 and 7 touch no files the others edit, so they can go at any time.
+
+| Session | Issues  | Theme                                | Files                                                                          |
+| ------- | ------- | ------------------------------------ | ------------------------------------------------------------------------------ |
+| 1       | 1, 2, 3, 4 | Semantic HTML and screen reader support | `login.html`, `login.js`, `study-decks.html`, `study-decks.js`              |
+| 2       | 6, 7    | Contrast and touch target (CSS)      | `login.css`, `my-decks.css`, and `shared.css` only if approved                  |
+| 3       | 8, 9    | Small behavior and wording fixes (JS) | `study-decks.js`, `create-deck.js`, `login.js`, `my-decks.js`                  |
+| 4       | 10, 11  | Demo content and branding            | README, `assets/`, nav bar and footer in all pages                              |
+| 5       | 12      | Move the shared JavaScript into one file | new shared JS file, all four JS files, all four HTML pages that load them   |
+| 6       | 5, 13   | Formatting and style consistency     | `create-deck.html`, all JS files, `create-deck.css`                             |
+| 7       | 14      | Repo hygiene                         | `.gitignore`, README project structure                                          |
+
+Notes: Sessions 1, 3, 5 and 6 all edit the JavaScript files, and sessions 1, 4 and 6 all edit the HTML pages. Start each one only after the one before it is merged, so none of them has merge conflicts.
 
 ## AI use
 
