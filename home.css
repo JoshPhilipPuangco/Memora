@@ -68,12 +68,13 @@
   border: 1px solid var(--border-grey);
   border-radius: var(--radius-md);
   padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  /* Same shadows as the My Decks cards (.deck-card in shared.css). */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
   transition: box-shadow var(--transition-fast);
 }
 
 .home-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
 }
 
 .home-card__icon {
