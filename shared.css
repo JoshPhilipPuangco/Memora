@@ -25,7 +25,7 @@
   --primary-active: #1F3D73;  /* primary, two steps darker */
   --accent-hover: #C6922F;    /* accent, one step darker */
   --accent-active: #B07F22;   /* accent, two steps darker */
-  --text-muted: #6E7175;      /* text, lighter gray — helper/instructional text under a field */
+  --text-muted: #65686C;      /* text, lighter gray — helper/instructional text under a field */
 
   --tint-blue-faint: #E4EBF6;   /* faint blue tint, secondary button hover */
   --tint-blue-deeper: #C9D7EE;  /* deeper blue tint, secondary button active */

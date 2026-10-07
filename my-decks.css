@@ -202,9 +202,20 @@
   min-height: 44px;
 }
 
+/* The Log Out link in the nav bar (only on this page) gets the same 44px. */
+.nav-bar__account-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
 @media (min-width: 768px) {
   .mydecks-card__actions > *,
   .mydecks-modal__actions > * {
+    min-height: 0;
+  }
+
+  .nav-bar__account-link {
     min-height: 0;
   }
 }
