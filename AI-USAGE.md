@@ -73,13 +73,6 @@
 - **What I did instead:** I asked Claude to rewrite the Study Mode script so it only uses methods that are in the Concept Coverage files. It took out the self-running function wrapper, the hidden property, Array.isArray, and Date.now(), and the page now shows and hides its parts in a covered way. I checked the new script against the Concept Coverage files and tested the page in the browser.
 - **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/3d47d68d809d4aa299c246e1aba3edb6a1fe03cb
 
-### Case 3 - Incorrect card container scope
-
-- **What it gave me:** ChatGPT gave me an approach for adding and removing dynamically created cards, but the approach did not correctly target the existing `card-container`. The Create Deck page uses `card-container` to hold the card blocks, so the JavaScript needs to work with that existing container when adding or removing cards.
-- **What was wrong with it:** The approach did not correctly handle the existing `card-container`. If the script does not select the correct container, the new Question and Answer fields may not be added to the correct part of the form, and the Remove Card functionality may not work with dynamically created cards.
-- **What I did instead:** I selected the existing card container using `document.getElementById("card-container")` and stored it in `cardsContainer`. When adding a card, I used `cardsContainer.appendChild(newDiv)` to place the new card inside the correct container. For Remove Card, I used event delegation by adding one click listener to the card container and checking for the `remove-card` class. This allows the same listener to work with Remove Card buttons created dynamically. I tested both Add Card and Remove Card in the browser.
-- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/7a9c6c03e15e63be649c89fb380a41d90fd649cc
-
 ## 3. Who wrote what
 
 ### JoshPhilipPuangco

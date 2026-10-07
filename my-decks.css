@@ -19,6 +19,26 @@
   margin-bottom: var(--space-standard);
 }
 
+/* --- Search box (between the heading row and the first deck) --- */
+.mydecks-search {
+  margin-bottom: var(--space-standard);
+}
+
+/* Touch target: at least 44px tall on phones, natural size from 768px up. */
+.mydecks-search input {
+  min-height: 44px;
+}
+
+@media (min-width: 768px) {
+  .mydecks-search {
+    max-width: 400px;
+  }
+
+  .mydecks-search input {
+    min-height: 0;
+  }
+}
+
 /* Single column at every screen size, one deck box per row. */
 .mydecks-list {
   display: flex;
