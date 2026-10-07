@@ -21,6 +21,14 @@
       <div id="mydecksHeaderAction"></div>
     </section>
 
+    <!-- Shown by my-decks.js only while at least one deck is saved. -->
+    <div class="mydecks-search" id="mydecksSearch" role="search" hidden>
+      <div class="form-field">
+        <label for="mydecksSearchInput">Search decks</label>
+        <input type="search" id="mydecksSearchInput" placeholder="Search by deck title" autocomplete="off" />
+      </div>
+    </div>
+
     <!-- Filled in by my-decks.js: the deck cards, or the empty message when there are none. -->
     <section class="mydecks-list" id="mydecksContent" aria-label="Your decks"></section>
 
