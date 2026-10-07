@@ -145,7 +145,7 @@ function handleSignup(event) {
 
   const username = signupUsernameInput.value.trim();
   const email = signupEmailInput.value.trim();
-  const password = signupPasswordInput.value.trim();
+  const password = signupPasswordInput.value;
 
   if (!username || !email || !password) {
     showError(signupError, 'Please fill in all fields.');
@@ -182,7 +182,7 @@ function handleLogin(event) {
   clearError(loginError);
 
   const email = loginEmailInput.value.trim();
-  const password = loginPasswordInput.value.trim();
+  const password = loginPasswordInput.value;
 
   if (!email || !password) {
     showError(loginError, 'Please fill in all fields.');

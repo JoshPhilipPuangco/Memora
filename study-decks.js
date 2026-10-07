@@ -333,7 +333,7 @@
     decks = loadDecks();
 
     if (!deckId) {
-      showMessage('No deck selected. Go back to My Decks and press Study on a deck.');
+      showMessage('No deck selected. Go back to My Decks and click a deck title to study it.');
       return;
     }
 
