@@ -371,18 +371,19 @@ img {
   border-radius: var(--radius-md);
   padding: var(--space-standard);
   cursor: pointer;
-  box-shadow: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
   text-decoration: none;
   color: inherit;
   transition: box-shadow var(--transition-fast);
 }
 
-.deck-card:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+.deck-card:hover,
+.deck-card:has(:focus-visible) {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
 }
 
 .deck-card:active {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.14);
 }
 
 .deck-card__title {
