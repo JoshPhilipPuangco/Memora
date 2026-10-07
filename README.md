@@ -63,10 +63,6 @@ Found in a review of the live site against the Final Project rubric. Each issue 
 
 | #   | Issue                                                                                                                                                                                                                          | Where                                              | Severity   |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ---------- |
-| 1   | Log In / Sign Up has no `<h1>`.                                                                                                                                                                                                | `login.html`                                       | Medium     |
-| 2   | The flashcard is a `<div role="button">` whose `aria-label` replaces its text, so a screen reader likely never announces the question or answer. The label also does not match the visible text.                               | `study-decks.html`                                 | Medium     |
-| 3   | The Log In and Sign Up tabs show which one is selected only through a CSS class. They have no `aria-selected` or `aria-pressed`.                                                                                               | `login.html`, `login.js`                           | Low        |
-| 4   | The `<h1>` in Study Mode is empty in the markup. When there is no deck to study, the header is hidden and the page has no `<h1>`.                                                                                              | `study-decks.html`, `study-decks.js`               | Low        |
 | 5   | `create-deck.html` does not follow the `index.html` reference style: different indentation, trailing whitespace on 6 lines, a typo in a comment ("buttonss"), and no `/>` on void tags like the other four pages.              | `create-deck.html`                                 | Low        |
 | 6   | Helper text (`--text-muted`, #6E7175) on the page background (#F1EFEA) has a 4.27:1 contrast ratio, below the 4.5:1 WCAG AA minimum. It affects the Sign Up helper text and the My Decks empty message. A fix may need `shared.css`. | `shared.css`, `login.css`, `my-decks.css`          | Medium-low |
 | 7   | The Log Out link is only 18px tall on a phone, while the other controls use 44px touch targets.                                                                                                                                | `my-decks.css`, `shared.css`                       | Low        |
@@ -80,11 +76,10 @@ Found in a review of the live site against the Final Project rubric. Each issue 
 
 ### Fix sessions
 
-Each session is one branch and one pull request. Some sessions edit the same files, so merge them in this order: 1, 2, 3, 4, 5, 6, 7. Sessions 2 and 7 touch no files the others edit, so they can go at any time.
+Each session is one branch and one pull request. Some sessions edit the same files, so merge them in this order: 2, 3, 4, 5, 6, 7 (session 1 is done and merged). Sessions 2 and 7 touch no files the others edit, so they can go at any time.
 
 | Session | Issues  | Theme                                | Files                                                                          |
 | ------- | ------- | ------------------------------------ | ------------------------------------------------------------------------------ |
-| 1       | 1, 2, 3, 4 | Semantic HTML and screen reader support | `login.html`, `login.js`, `study-decks.html`, `study-decks.js`              |
 | 2       | 6, 7    | Contrast and touch target (CSS)      | `login.css`, `my-decks.css`, and `shared.css` only if approved                  |
 | 3       | 8, 9    | Small behavior and wording fixes (JS) | `study-decks.js`, `create-deck.js`, `login.js`, `my-decks.js`                  |
 | 4       | 10, 11  | Demo content and branding            | README, `assets/`, nav bar and footer in all pages                              |
@@ -92,7 +87,7 @@ Each session is one branch and one pull request. Some sessions edit the same fil
 | 6       | 5, 13   | Formatting and style consistency     | `create-deck.html`, all JS files, `create-deck.css`                             |
 | 7       | 14      | Repo hygiene                         | `.gitignore`, README project structure                                          |
 
-Notes: Sessions 1, 3, 5 and 6 all edit the JavaScript files, and sessions 1, 4 and 6 all edit the HTML pages. Start each one only after the one before it is merged, so none of them has merge conflicts.
+Notes: Sessions 3, 5 and 6 all edit the JavaScript files, and sessions 4 and 6 both edit the HTML pages. Start each one only after the one before it is merged, so none of them has merge conflicts.
 
 ## AI use
 
