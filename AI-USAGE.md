@@ -73,6 +73,12 @@
 - **What I did instead:** I asked Claude to rewrite the Study Mode script so it only uses methods that are in the Concept Coverage files. It took out the self-running function wrapper, the hidden property, Array.isArray, and Date.now(), and the page now shows and hides its parts in a covered way. I checked the new script against the Concept Coverage files and tested the page in the browser.
 - **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/3d47d68d809d4aa299c246e1aba3edb6a1fe03cb
 
+### Case 3 - Browser validation did not match the page design
+- **What it gave us:** The initial Create Deck implementation used HTML `required` validation for the form fields.
+- **What was wrong with it:** Empty fields triggered the browser's default validation bubble instead of an inline error message that matched the Memora page design.
+- **What we did instead:** We changed the Create/Edit Deck form to use custom inline error messages. The JavaScript checks the fields and displays the error under the first empty field, while Create Deck CSS styles the invalid field and message.
+- **Commit:** https://github.com/JoshPhilipPuangco/Memora/commit/ae9dae76676546a7e129bffd98f52363d64dedcf
+
 ## 3. Who wrote what
 
 ### JoshPhilipPuangco
