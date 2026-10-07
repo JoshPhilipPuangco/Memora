@@ -136,10 +136,12 @@
   }
 
   // ---- Empty / error states ----
+  // The header stays so the page keeps its <h1>; only the progress lines go.
   function showMessage(text) {
     studyMessageText.textContent = text;
     studyMessage.hidden = false;
-    studyHeader.hidden = true;
+    progressText.hidden = true;
+    roundText.hidden = true;
     flashcard.hidden = true;
     markRow.hidden = true;
     navRow.hidden = true;
