@@ -5,7 +5,9 @@
 //
 // Decks are created on the Create Deck page (create-deck.js), which saves
 // into the same "memora_decks" list, and edits them (title and cards) via
-// create-deck.html?deck=<id>. This page only lists and deletes them.
+// create-deck.html?deck=<id>. This page only lists, searches, and deletes them.
+// The search box filters by title as the user types. The full list stays
+// untouched; render() draws a filtered copy of it.
 //
 // The page is built the way Module 10 teaches: the array is the truth, and
 // each render() rewrites the page from it with innerHTML. Anything a user
@@ -19,6 +21,8 @@ const USER_KEY = 'currentUser'; // written by login.js
 const headerAction = document.getElementById('mydecksHeaderAction');
 const content = document.getElementById('mydecksContent');
 const modalRoot = document.getElementById('mydecksModalRoot');
+const search = document.getElementById('mydecksSearch');
+const searchInput = document.getElementById('mydecksSearchInput');
 const logoutLink = document.getElementById('logoutLink');
 
 // The deck the modal is currently about (null while the modal is closed).
@@ -80,6 +84,7 @@ function render() {
   const decks = loadDecks();
 
   if (decks.length === 0) {
+    search.hidden = true;
     headerAction.innerHTML = '';
     content.innerHTML = `
       <div class="mydecks-empty" id="mydecksEmpty">
@@ -92,12 +97,32 @@ function render() {
     return;
   }
 
+  search.hidden = false;
   headerAction.innerHTML =
     '<a class="btn-accent" id="mydecksCreateBtn" href="create-deck.html">+ Create Deck</a>';
 
+  // Compare in lowercase so the search ignores case.
+  const typed = searchInput.value.trim();
+  const query = typed.toLowerCase();
+  const visibleDecks = decks.filter((deck) =>
+    deck.title.toLowerCase().includes(query)
+  );
+
+  if (visibleDecks.length === 0) {
+    content.innerHTML = `
+      <div class="mydecks-empty" id="mydecksNoResults">
+        <p class="mydecks-empty__text"></p>
+      </div>
+    `;
+    // What the user typed goes in with textContent, never innerHTML.
+    document.querySelector('#mydecksNoResults .mydecks-empty__text').textContent =
+      `No decks match "${typed}".`;
+    return;
+  }
+
   // Only our own data (generated ids, numbers) goes into this string.
   let html = '';
-  for (const deck of decks) {
+  for (const deck of visibleDecks) {
     const progress = countProgress(deck);
     html += `
       <article class="deck-card mydecks-card">
@@ -117,12 +142,12 @@ function render() {
   content.innerHTML = html;
 
   // The typed part: titles go in with textContent. Then each Delete button
-  // gets its listener. The Nth card on the page belongs to decks[N].
+  // gets its listener. The Nth card on the page belongs to visibleDecks[N].
   const titleLinks = document.querySelectorAll('.mydecks-card__link');
   const deleteButtons = document.querySelectorAll('.mydecks-card__delete');
-  for (let i = 0; i < decks.length; i++) {
-    const deckId = decks[i].id;
-    titleLinks[i].textContent = decks[i].title;
+  for (let i = 0; i < visibleDecks.length; i++) {
+    const deckId = visibleDecks[i].id;
+    titleLinks[i].textContent = visibleDecks[i].title;
     deleteButtons[i].addEventListener('click', () => openModal(deckId));
   }
 }
@@ -179,6 +204,9 @@ function handleDeleteConfirm() {
 
 // ---- Events ----
 logoutLink.addEventListener('click', logOut);
+
+// Redraw the filtered list on every keystroke.
+searchInput.addEventListener('input', render);
 
 // On the document so Escape closes the modal whichever element has focus.
 document.addEventListener('keydown', (e) => {
