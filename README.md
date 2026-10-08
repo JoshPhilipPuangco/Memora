@@ -68,15 +68,13 @@ Found in a review of the live site against the Final Project rubric. Each issue 
 | #   | Issue                                                                                                                                                                                                                          | Where                                              | Severity   |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ---------- |
 | 14  | There is no `.gitignore`, so `.DS_Store` files could be committed by accident. The project structure section above leaves out `AI-USAGE.md`, the compiled increment reports, and `.nojekyll`.                                    | repo root, README                                  | Low        |
-| 16  | The footer tagline "Free flashcards for college students" repeats the Home page and makes the footer wrap to two lines on a phone (79px tall, against 62px on desktop). Fix: remove the tagline and keep "&copy; 2026 Memora · GitHub". | all 5 HTML pages                                   | Low        |
 
 ### Fix sessions
 
-Each session is one branch and one pull request. Sessions 7 and 8 are left (sessions 1 to 6 are done and merged). They touch different files, so they do not conflict.
+Each session is one branch and one pull request. Session 8 is the only one left (sessions 1 to 7 are done and merged).
 
 | Session | Issues  | Theme                                | Files                                                                          |
 | ------- | ------- | ------------------------------------ | ------------------------------------------------------------------------------ |
-| 7       | 16      | Footer cleanup                       | footer text in all 5 HTML pages                                                 |
 | 8       | 14      | Repo hygiene                         | `.gitignore`, README project structure                                          |
 
 ## AI use
