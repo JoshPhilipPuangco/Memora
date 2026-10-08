@@ -67,19 +67,7 @@ Each page loads `shared.css` plus its own page-specific CSS file. Each interacti
 
 ## 6. Known issues and next steps
 
-Found in a review of the live site against the Final Project rubric. Each issue is fixed in a separate pull request, grouped into sessions below.
-
-| #   | Issue                                                                                                                                                                                                                          | Where                                              | Severity   |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ---------- |
-| 14  | There is no `.gitignore`, so `.DS_Store` files could be committed by accident. The project structure section above leaves out `AI-USAGE.md`, the compiled increment reports, and `.nojekyll`.                                    | repo root, README                                  | Low        |
-
-### Fix sessions
-
-Each session is one branch and one pull request. Session 8 is the only one left (sessions 1 to 7 are done and merged).
-
-| Session | Issues  | Theme                                | Files                                                                          |
-| ------- | ------- | ------------------------------------ | ------------------------------------------------------------------------------ |
-| 8       | 14      | Repo hygiene                         | `.gitignore`, README project structure                                          |
+No known issues at the moment.
 
 ## AI use
 
