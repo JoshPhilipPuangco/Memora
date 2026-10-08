@@ -67,7 +67,19 @@ Each page loads `shared.css` plus its own page-specific CSS file. Each interacti
 
 ## 6. Known issues and next steps
 
-No known issues at the moment.
+Found in a final review of the live site against the Final Project rubric. Each issue is fixed in a separate pull request, grouped into sessions below.
+
+| #   | Issue                                                                                                                                                                                                                                                                                                                                                  | Where        | Severity |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------ | -------- |
+| 17  | `shared.css` has rules and a variable that no page uses: the `.heading` class (in the `h1, h2, .heading` rule), the whole `small, .text-small` rule, the `.btn-secondary-icon img` rule (the buttons use inline SVG), and the `--space-unit` variable. Fix: delete them. Nothing else in `shared.css` changes. | `shared.css` | Low      |
+
+### Fix sessions
+
+Each session is one branch and one pull request.
+
+| Session | Issues | Theme                    | Files        |
+| ------- | ------ | ------------------------ | ------------ |
+| 9       | 17     | Remove unused shared CSS | `shared.css` |
 
 ## AI use
 
