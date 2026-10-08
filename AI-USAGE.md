@@ -83,22 +83,44 @@
 ##### Login/Signup page markup
 
 - **File:** `login.html`
-- **Commit:** [ef717c4](https://github.com/JoshPhilipPuangco/Memora/commit/ef717c4599e870d2a027a74067d2236730ad841a) (This commit holds both files. login.html is the one I wrote. Claude is listed as co-author because login.js in the same commit was mostly AI-written.)
-- **What it does and why it is built this way:** This file is the HTML for the Login and Sign Up page. It is one page with two forms inside it, a login form and a signup form, instead of two separate pages. A pair of buttons at the top, the tab switcher, show one form and hide the other, using the hidden attribute, so the user never sees both at once and the page never reloads when they switch. Each form has a short note that says which fields are required, labels with a red asterisk on each required field, and an empty paragraph where an error message can be shown. The signup form also has a short helper line under each field that explains the rule for that field, such as the minimum length for the password.
+- **Commit:** [ef717c4](https://github.com/JoshPhilipPuangco/Memora/commit/ef717c4599e870d2a027a74067d2236730ad841a) (This commit holds several files. I wrote the first version of login.html myself, using the Concept Coverage files as an important guide. Then I asked Claude to check it against index.html, shared.css, home.css, and the Concept Coverage files. Claude found some mistakes and made the fixes in the file, some of them to keep it within the Concept Coverage files. Claude is listed as co-author for this, and because login.js in the same commit was mostly AI-written.)
+- **What it does and why it is built this way:** This file is the HTML for the Login and Sign Up page. It is one page with two forms inside it, a login form and a signup form, instead of two separate pages.
 
-  Both forms have the novalidate attribute, which turns off the browser's own pop-up validation, so the JavaScript file the AI wrote mostly (login.js) is the only thing that checks the input and shows error text. Every input, form, and error paragraph has an id, because login.js finds them with getElementById and uses them to read what the user typed and to save or check the account in localStorage. If an id here is changed without changing login.js to match, the matching lookup in login.js would stop working. Lastly, the novalidate attribute and the hidden attribute are not in Module 5 (Tables and Forms), which only covers required, type, pattern, minlength, and maxlength for the browser's built in validation. These two were not discussed in class, so outside research on MDN was needed to learn what they do and how to use them.
+  A pair of buttons at the top, the tab switcher, show one form and hide the other, using the hidden attribute, so the user never sees both at once and the page never reloads when they switch.
+
+  Each form has a short note that says which fields are required, labels with a red asterisk on each required field, and an empty paragraph where an error message can be shown. The signup form also has a short helper line under each field that explains the rule for that field, such as the minimum length for the password.
+
+  Both forms have the novalidate attribute, which turns off the browser's own pop-up validation, so the JavaScript file the AI wrote mostly (login.js) is the only thing that checks the input and shows error text.
+
+  Every input, form, and error paragraph has an id, because login.js finds them with getElementById and uses them to read what the user typed and to save or check the account in localStorage. If an id here is changed without changing login.js to match, the matching lookup in login.js would stop working.
+
+  Lastly, the novalidate attribute and the hidden attribute are not in Module 5 (Tables and Forms), which only covers required, type, pattern, minlength, and maxlength for the browser's built in validation. These two were not discussed in class, so outside research on MDN was needed to learn what they do and how to use them.
 
 ##### My Decks page markup and layout
 
 - **Files:**
   - `my-decks.html`
   - `my-decks.css`
-- **Commit:** [ab5ab77](https://github.com/JoshPhilipPuangco/Memora/commit/ab5ab7759131727d2d76a51a1e694f765e3552fc) (This commit also holds my-decks.js and create-deck.js. my-decks.html and my-decks.css are the files I wrote. Claude is listed as co-author because of my-decks.js and create-deck.js.)
-- **What it does and why it is built this way:** my-decks.html is the markup for the My Decks page. It keeps the same header, main, and footer structure as the Home page. Almost nothing is written inside it. It has the heading, an empty div for the header button (mydecksHeaderAction), one empty section for the deck cards (mydecksContent, labeled "Your decks"), and an empty div for the delete confirmation (mydecksModalRoot). my-decks.js finds these three by id and fills them, so the page can show cards, the empty message, or the modal without hidden copies in the HTML. If one of these ids changes and my-decks.js does not, the lookup returns nothing, the script throws an error, and the page stays empty.
+- **Commit:** [ab5ab77](https://github.com/JoshPhilipPuangco/Memora/commit/ab5ab7759131727d2d76a51a1e694f765e3552fc) (My Decks was first built by my teammate Quinn in an earlier commit: https://github.com/JoshPhilipPuangco/Memora/commit/81f0804e5cbd5852ac488d31b1d0ee64f45cb2f3. He did no work in Week 2, which our Division of Work records, so I reworked the page myself. I wrote the new my-decks.html and my-decks.css, using the Concept Coverage files as an important guide. Then I asked Claude to check them against index.html, shared.css, home.css, and the Concept Coverage files. Claude found some mistakes and made the fixes, some of them to keep the files within the Concept Coverage files. This commit also holds my-decks.js and create-deck.js. Claude is listed as co-author for the fixes and for those two JS files.)
+- **What it does and why it is built this way:** my-decks.html is the markup for the My Decks page. It keeps the same header, main, and footer structure as the Home page. Almost nothing is written inside it. It has the heading, an empty div for the header button (mydecksHeaderAction), one empty section for the deck cards (mydecksContent, labeled "Your decks"), and an empty div for the delete confirmation (mydecksModalRoot).
 
-  my-decks.css only holds the layout around the shared .deck-card style, and it uses the variables from shared.css, such as --space-standard and --error, instead of fixed numbers. The deck list is one column at every width, like the wireframe. The title link is a stretched link: its ::after is placed over the whole card with position: absolute and inset: 0, so clicking anywhere on the card opens Study Mode. The Edit and Delete row sits above it with z-index: 1. That row has pointer-events: none and its buttons have pointer-events: auto, so the empty space beside the buttons still opens the deck. Without that, the row blocks the click. On phones the buttons are at least 44px tall, and from 768px up they go back to their natural size. The modal overlay is position: fixed over the whole page with a dark background. A few things in this file are not in the Concept Coverage files: position, inset, z-index, ::after, pointer-events, and :focus-visible. I added them because they are essential to this page, and I understand how they work through outside research.
+  my-decks.js finds these three by id and fills them, so the page can show cards, the empty message, or the modal without hidden copies in the HTML. If one of these ids changes and my-decks.js does not, the lookup returns nothing, the script throws an error, and the page stays empty.
 
-  The two files work together with my-decks.js. my-decks.js fills the three empty spots in my-decks.html and writes the cards with the class names that my-decks.css styles, such as mydecks-card, mydecks-card__link, mydecks-card__actions, and mydecks-card__delete. The CSS depends on that structure. The stretched link only covers the whole card because the link sits inside an article that has position: relative, and the Edit and Delete row only stays clickable because it sits above that link. If a class name or an id changes in one file and not in the others, the styling, the whole-card click, or the page itself would stop working.
+  my-decks.css only holds the layout around the shared .deck-card style, and it uses the variables from shared.css, such as --space-standard and --error, instead of fixed numbers.
+
+  The deck list is one column at every width, like the wireframe.
+
+  The title link is a stretched link: its ::after is placed over the whole card with position: absolute and inset: 0, so clicking anywhere on the card opens Study Mode.
+
+  The Edit and Delete row sits above it with z-index: 1. That row has pointer-events: none and its buttons have pointer-events: auto, so the empty space beside the buttons still opens the deck. Without that, the row blocks the click.
+
+  On phones the buttons are at least 44px tall, and from 768px up they go back to their natural size. The modal overlay is position: fixed over the whole page with a dark background.
+
+  A few things in this file are not in the Concept Coverage files: position, inset, z-index, ::after, pointer-events, and :focus-visible. I added them because they are essential to this page, and I understand how they work through outside research.
+
+  The two files work together with my-decks.js. my-decks.js fills the three empty spots in my-decks.html and writes the cards with the class names that my-decks.css styles, such as mydecks-card, mydecks-card__link, mydecks-card__actions, and mydecks-card__delete. The CSS depends on that structure.
+
+  The stretched link only covers the whole card because the link sits inside an article that has position: relative, and the Edit and Delete row only stays clickable because it sits above that link. If a class name or an id changes in one file and not in the others, the styling, the whole-card click, or the page itself would stop working.
 
 #### The AI-written part I understand best
 
@@ -106,11 +128,33 @@
 
 - **File:** `login.js`
 - **Commit:** [ef717c4](https://github.com/JoshPhilipPuangco/Memora/commit/ef717c4599e870d2a027a74067d2236730ad841a)
-- **What it does and why we kept it:** This file is the JavaScript for the Login and Sign Up page. It finds the tab buttons, the two forms, the two error paragraphs, and all five inputs by id. The showTab function switches the class on the tab buttons and the hidden property on the two forms, so only one form shows at a time, and it clears both error messages every time the tab changes.
+- **What it does and why we kept it:** This file is the JavaScript for the Login and Sign Up page. It finds the tab buttons, the two forms, the two error paragraphs, and all five inputs by id.
 
-  The initTabFromHash function reads the page's URL hash when the page loads and picks the signup tab if the hash is #signup, so the Sign Up button on the Home page can open straight to that tab. The three isXValid functions check the username, email, and password by hand, using character loops, includes, and indexOf, instead of a regular expression, because the course has not covered RegExp. getAccount, saveAccount, and setCurrentUser read and write to localStorage with JSON.stringify and JSON.parse, since this project has no server and localStorage was agreed as an allowed exception. setCurrentUser saves the logged in user's email under the key currentUser in localStorage, and my-decks.js, create-deck.js, and study-decks.js each check whether that key exists to decide if a visitor is logged in before showing their page. handleSignup and handleLogin run when a form is submitted. They call event.preventDefault() so the page does not reload, read the typed values, run them through the checks in order, and either show an error message or save the account and send the user to my-decks.html. We kept this file because it covers the whole signup and login flow in a way I can trace end to end, and most of it uses array and string methods already taught in class.
-    
-  A few parts (className, the hidden property, event.preventDefault(), and location.hash) are not in the Concept Coverage files, so I looked them up myself to understand them before accepting the code. I kept them in login.js, but I had className and the hidden property removed from my-decks.js (see Case 1). The reason is that the login page works in a different way. It is one page with two forms, and it must switch between them without a reload. event.preventDefault() stops the page from reloading when a form is submitted. location.hash lets the Sign Up button on the Home page open the page on the signup tab. The hidden property switches between two forms that are already in the HTML, so the page does not have to rebuild them. I did not find a way in the Concept Coverage files to prevent the reload, read the hash, or switch between two existing forms. className is the weakest case. It changes which tab button looks active when showTab runs, and initTabFromHash decides which tab shows first. I did not look for a covered way to do what className does. login.js was merged before the coverage review in Case 1, and after the review I decided to keep it for the reasons above.
+  The showTab function switches the class on the tab buttons and the hidden property on the two forms, so only one form shows at a time, and it clears both error messages every time the tab changes.
+
+  The initTabFromHash function reads the page's URL hash when the page loads and picks the signup tab if the hash is #signup, so the Sign Up button on the Home page can open straight to that tab.
+
+  The three isXValid functions check the username, email, and password by hand, using character loops, includes, and indexOf, instead of a regular expression, because the course has not covered RegExp.
+
+  getAccount, saveAccount, and setCurrentUser read and write to localStorage with JSON.stringify and JSON.parse, since this project has no server and localStorage was agreed as an allowed exception.
+
+  setCurrentUser saves the logged in user's email under the key currentUser in localStorage, and my-decks.js, create-deck.js, and study-decks.js each check whether that key exists to decide if a visitor is logged in before showing their page.
+
+  This explains login.js as it was in the commit above. Later commits moved the shared login check and the storage keys into shared.js.
+
+  handleSignup and handleLogin run when a form is submitted. They call event.preventDefault() so the page does not reload, read the typed values, run them through the checks in order, and either show an error message or save the account and send the user to my-decks.html.
+
+  We kept this file because it covers the whole signup and login flow in a way I can trace end to end, and most of it uses array and string methods already taught in class.
+
+  A few parts (className, the hidden property, event.preventDefault(), and location.hash) are not in the Concept Coverage files, so I looked them up myself to understand them before accepting the code.
+
+  I kept them in login.js, but I had className and the hidden property removed from my-decks.js (see Case 1).
+
+  The reason is that the login page works in a different way. It is one page with two forms, and it must switch between them without a reload.
+
+  event.preventDefault() stops the page from reloading when a form is submitted. location.hash lets the Sign Up button on the Home page open the page on the signup tab. The hidden property switches between two forms that are already in the HTML, so the page does not have to rebuild them. I did not find a way in the Concept Coverage files to prevent the reload, read the hash, or switch between two existing forms.
+
+  className is the weakest case. It changes which tab button looks active when showTab runs, and initTabFromHash decides which tab shows first. I did not look for a covered way to do what className does. login.js was merged before the coverage review in Case 1, and after the review I decided to keep it for the reasons above.
 
 ### Tsuyin06
 
