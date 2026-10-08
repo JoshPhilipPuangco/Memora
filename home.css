@@ -121,14 +121,7 @@
   }
 
   .home-hero {
-    flex-direction: row;
-    align-items: center;
     gap: 56px;
-  }
-
-  .home-hero__content {
-    flex: 1;
-    text-align: left;
   }
 
   .home-hero__title {
@@ -138,23 +131,29 @@
   .home-hero__intro {
     font-size: 22px;
   }
-
-  .home-hero .button-pair {
-    justify-content: flex-start;
-  }
-
-  .home-hero__image {
-    flex: 1;
-    min-width: 0;
-  }
 }
 
 
 /* --- 1024px and up: room for the 64px heading and three cards in a row --- */
 
 @media (min-width: 1024px) {
+  .home-hero {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .home-hero__content {
+    flex: 1;
+    text-align: left;
+  }
+
+  .home-hero .button-pair {
+    justify-content: flex-start;
+  }
+
   .home-hero__image {
     flex: 1.4;
+    min-width: 0;
   }
 
   .home-hero__title {
