@@ -30,6 +30,18 @@ function loadDecks() {
   }
 }
 
+// Returns true if the list was saved and false if storage refused it, so a
+// page can stay put (Create Deck does) instead of acting as if it worked.
+function saveDecks(decks) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+    return true;
+  } catch (err) {
+    console.error('Could not save decks to storage:', err);
+    return false;
+  }
+}
+
 // ---- Cards ----
 // Every saved card has a unique id, so Study Mode can save a mark onto the
 // right card even if the cards were edited in another tab. The position is in

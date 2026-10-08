@@ -1,83 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Memora - Create Deck</title>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="stylesheet" href="create-deck.css" />
+  <script src="shared.js" defer></script>
+  <script src="create-deck.js" defer></script>
+</head>
+<body>
+  <header class="nav-bar">
+    <a class="nav-bar__logo" href="my-decks.html"><img class="nav-bar__logo-img" src="assets/logo.png" width="32" height="32" alt="" />Memora</a>
+  </header>
 
-<!--head -->
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Memora - Create Deck</title>
-        <link rel="icon" type="image/png" href="assets/favicon.png" />
-        <link rel="stylesheet" href="shared.css">
-        <link rel="stylesheet" href="create-deck.css">
-        <script src="shared.js" defer></script>
-        <script src="create-deck.js" defer></script>
-    </head>
-    
-<!--body -->
-    <body>
-            <header class="nav-bar">
-            <a href="my-decks.html" class="nav-bar__logo"><img class="nav-bar__logo-img" src="assets/logo.png" width="32" height="32" alt="" />Memora</a>
-            </header>
+  <main class="page-container">
+    <h1 class="create-deck-title">Create a New Deck</h1>
 
-        <main class="page-container">
+    <form class="create-deck-form" novalidate>
+      <div class="form-field">
+        <label for="deck-title">Deck Title</label>
+        <input type="text" id="deck-title" name="deck-title" placeholder="Enter deck title" required />
+      </div>
 
-        <h1 class="create-deck-title">Create a New Deck</h1>
-       
-<!--forms -->
-        <form class="create-deck-form" novalidate>
-            <div class="form-field">
-                <label for="deck-title">Deck Title</label>
-
-                <input 
-                type="text" 
-                id="deck-title" 
-                name="deck-title"
-                placeholder="Enter deck title" required> 
-
-            </div>
-
-    <!--the card area -->
-    <div id="card-container">
-            <div class="card-block">
-       
-        <!--card question -->
-        <div class="form-field">
+      <!-- The card area. create-deck.js adds and removes card blocks here. -->
+      <div id="card-container">
+        <div class="card-block" data-reviewed="false" data-id="">
+          <div class="form-field">
             <label for="question-1">Question</label>
             <textarea
-                id="question-1"
-                name="question-1"
-                placeholder="Enter your question"
-                required
+              id="question-1"
+              name="question-1"
+              placeholder="Enter your question"
+              required
             ></textarea>
-        </div>
+          </div>
 
-        <!--card answer -->
-        <div class="form-field">
+          <div class="form-field">
             <label for="answer-1">Answer</label>
             <textarea
-                id="answer-1"
-                name="answer-1"
-                placeholder="Enter your answer"
-                required
+              id="answer-1"
+              name="answer-1"
+              placeholder="Enter your answer"
+              required
             ></textarea>
+          </div>
+
+          <!-- Hidden by create-deck.css while this is the only card. -->
+          <button type="button" class="btn-secondary remove-card">Remove Card</button>
         </div>
+      </div>
 
-        <!--remove card (hidden by create-deck.css while this is the only card) -->
-        <button type="button" class="btn-secondary remove-card">
-            Remove Card
-        </button>
+      <!-- Buttons -->
+      <div class="button-pair">
+        <button type="button" class="btn-secondary" id="add-card">Add another card</button>
+        <button type="submit" class="btn-primary">Save deck</button>
+        <button type="button" class="btn-secondary" id="cancel-deck">Cancel</button>
+      </div>
+    </form>
+  </main>
 
-    </div>
-    </div>
-
-    <!--buttonss -->
-            <div class="button-pair">
-                <button type="button" class="btn-secondary" id="add-card">Add another card</button> 
-                <button type="submit" class="btn-primary">Save deck</button>
-                <button type="button" class="btn-secondary" id="cancel-deck">Cancel</button> 
-            </div>
-        </form>
-        </main>
-    <footer class="footer"><p>&copy; 2026 Memora · Free flashcards for college students · <a href="https://github.com/JoshPhilipPuangco/Memora">GitHub</a></p></footer>
-    </body>
-</html>    
+  <footer class="footer">
+    <p>&copy; 2026 Memora · Free flashcards for college students · <a href="https://github.com/JoshPhilipPuangco/Memora">GitHub</a></p>
+  </footer>
+</body>
+</html>
