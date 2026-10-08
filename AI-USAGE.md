@@ -138,9 +138,9 @@
 
   getAccount, saveAccount, and setCurrentUser read and write to localStorage with JSON.stringify and JSON.parse, since this project has no server and localStorage was agreed as an allowed exception.
 
-  setCurrentUser saves the logged in user's email under the key currentUser in localStorage, and my-decks.js, create-deck.js, and study-decks.js each check whether that key exists to decide if a visitor is logged in before showing their page.
+  setCurrentUser saves the logged in user's email under the key currentUser in localStorage.
 
-  This explains login.js as it was in the commit above. Later commits moved the shared login check and the storage keys into shared.js.
+  This key is there so that other pages, such as my-decks.js, create-deck.js, and study-decks.js, can check whether it exists to decide if a visitor is logged in.
 
   handleSignup and handleLogin run when a form is submitted. They call event.preventDefault() so the page does not reload, read the typed values, run them through the checks in order, and either show an error message or save the account and send the user to my-decks.html.
 
