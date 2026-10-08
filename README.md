@@ -67,21 +67,15 @@ Found in a review of the live site against the Final Project rubric. Each issue 
 
 | #   | Issue                                                                                                                                                                                                                          | Where                                              | Severity   |
 | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------- | ---------- |
-| 5   | `create-deck.html` does not follow the `index.html` reference style: different indentation, trailing whitespace on 6 lines, a typo in a comment ("buttonss"), and no `/>` on void tags like the other four pages.              | `create-deck.html`                                 | Low        |
-| 13  | Inconsistent code style: `study-decks.js` uses a function wrapper the other files do not, `create-deck.js` uses 4-space double quotes while the others use 2-space single quotes, `'use strict'` is in only 3 of 4 JS files, some comments have typos ("AdD", "CaNCEL", "SuBMIT", "ReMOVE"), and the deck list is saved by three separate copies of the same code (`saveDecks` in `my-decks.js`, `writeDecks` in `study-decks.js`, and an inline save in `create-deck.js`). Fix: one shared `saveDecks()` in `shared.js` that returns true or false, so Create Deck can still stay on the page when a save fails. `shared.css` also has unused rules (`.heading`, `.text-small`), which are left alone unless a change to `shared.css` is approved. | JS files, `shared.js`, `create-deck.css`, `shared.css` | Low        |
 | 14  | There is no `.gitignore`, so `.DS_Store` files could be committed by accident. The project structure section above leaves out `AI-USAGE.md`, the compiled increment reports, and `.nojekyll`.                                    | repo root, README                                  | Low        |
-| 15  | The first card of a new deck is saved with a `null` ID. The starter card block in `create-deck.html` has no `data-id` attribute, so `block.getAttribute("data-id")` returns `null` and the `cardId === ""` check in `create-deck.js` never matches. Study Mode gives the card an ID the first time the deck is studied, so students do not see a problem. | `create-deck.html`, `create-deck.js`               | Low        |
 
 ### Fix sessions
 
-Each session is one branch and one pull request. Some sessions edit the same files, so merge them in this order: 6, 7 (sessions 1 to 5 are done and merged). Session 7 touches no files the others edit, so it can go at any time.
+Each session is one branch and one pull request. Session 7 is the only one left (sessions 1 to 6 are done and merged).
 
 | Session | Issues  | Theme                                | Files                                                                          |
 | ------- | ------- | ------------------------------------ | ------------------------------------------------------------------------------ |
-| 6       | 5, 13, 15 | Formatting and style consistency, a shared `saveDecks()`, and the first card's ID | `create-deck.html`, all JS files, `shared.js`, `create-deck.css` |
 | 7       | 14      | Repo hygiene                         | `.gitignore`, README project structure                                          |
-
-Notes: Start each session only after the one before it is merged, so none of them has merge conflicts.
 
 ## AI use
 
