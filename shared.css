@@ -53,7 +53,6 @@
     Helvetica, Arial, sans-serif;
 
   /* --- Spacing, base unit 8px --- */
-  --space-unit: 8px;
   --space-tight: 8px;      /* 1x, between closely related items */
   --space-standard: 24px;  /* 3x, between sections or blocks */
 
@@ -98,16 +97,11 @@ body {
   font-weight: var(--font-weight-body);
 }
 
-h1, h2, .heading {
+h1, h2 {
   font-size: var(--font-size-heading);
   font-weight: var(--font-weight-heading);
   color: var(--text);
   margin: 0;
-}
-
-small, .text-small {
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-small);
 }
 
 img {
@@ -288,8 +282,7 @@ img {
   transition: background-color var(--transition-fast);
 }
 
-.btn-secondary-icon svg,
-.btn-secondary-icon img {
+.btn-secondary-icon svg {
   width: 16px;
   height: 16px;
 }
