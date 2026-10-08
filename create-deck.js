@@ -1,9 +1,8 @@
 // Create Deck page. Also used as the Edit Deck page: my-decks.js links here
 // with ?deck=<id>, and then the form is filled with that deck and saving
 // updates it instead of adding a new one.
-
-const STORAGE_KEY = "memora_decks";
-const USER_KEY = "currentUser"; // written by login.js
+// STORAGE_KEY, isLoggedIn(), loadDecks() and makeCardId() come from shared.js,
+// which create-deck.html loads first.
 
 let cardNumber = 1;
 
@@ -18,28 +17,6 @@ const saveButton = document.querySelector("button[type='submit']");
 
 // Set when editing an existing deck, null when creating a new one.
 let editingDeckId = new URLSearchParams(window.location.search).get("deck");
-
-// ---- Login check ----
-function isLoggedIn() {
-    try {
-        return localStorage.getItem(USER_KEY) !== null;
-    } catch (error) {
-        console.error("Could not read the current user from storage:", error);
-        return false;
-    }
-}
-
-// ---- Storage ----
-function loadDecks() {
-    try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        const decks = raw ? JSON.parse(raw) : [];
-        return Array.isArray(decks) ? decks : [];
-    } catch (error) {
-        console.error("Could not read decks from storage:", error);
-        return [];
-    }
-}
 
 // ---- Error message ----
 // Only one field is flagged at a time. The message is a .form-error line
@@ -98,15 +75,6 @@ function showFirstEmptyField() {
 }
 
 // ---- Cards ----
-// Every saved card has a unique id, so Study Mode can save a mark onto the
-// right card even if the cards were edited in another tab. The position is in
-// the id because cards saved in the same millisecond share the time.
-// study-decks.js builds ids in the same format (giveCardsIds). The pages share
-// no JS file, so keep the two in sync by hand.
-function makeCardId(position) {
-    return "card_" + Date.now() + "_" + position + "_" + Math.floor(Math.random() * 10000);
-}
-
 // Builds one Question/Answer block. Text goes in through .value (never
 // innerHTML) because it is typed by the user. An existing card brings its id
 // (kept in data-id so saving keeps it); a new card has none until it is saved.

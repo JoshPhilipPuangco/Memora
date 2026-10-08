@@ -1,6 +1,6 @@
-'use strict';
+// USER_KEY and isLoggedIn() come from shared.js, which login.html loads first.
 
-const USER_KEY = 'currentUser'; // read by my-decks.js, create-deck.js, and study-decks.js
+'use strict';
 
 const loginMain = document.querySelector('.login-main');
 const tabLogin = document.getElementById('tab-login');
@@ -120,15 +120,6 @@ function saveAccount(username, email, password) {
 
 function setCurrentUser(email) {
   localStorage.setItem(USER_KEY, JSON.stringify({ email: email }));
-}
-
-function isLoggedIn() {
-  try {
-    return localStorage.getItem(USER_KEY) !== null;
-  } catch (err) {
-    console.error('Could not read the current user from storage:', err);
-    return false;
-  }
 }
 
 function showError(errorElement, message) {
