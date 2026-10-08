@@ -6,12 +6,11 @@
 // only the not-yet-reviewed ones) and it is finished once every card in it
 // has been marked, with either button. Then a dialog asks the student what to
 // do next. The arrays below are the truth; the page is a picture of them.
+// STORAGE_KEY, isLoggedIn(), loadDecks() and makeCardId() come from shared.js,
+// which study-decks.html loads first.
 
 (function () {
   'use strict';
-
-  const STORAGE_KEY = 'memora_decks';
-  const USER_KEY = 'currentUser'; // written by login.js
 
   // ---- DOM refs ----
   const studyMain = document.querySelector('.study-main');
@@ -53,28 +52,7 @@
   let pressStartedOnOverlay = false;
   let hasStarted = false;
 
-  // ---- Login check ----
-  function isLoggedIn() {
-    try {
-      return localStorage.getItem(USER_KEY) !== null;
-    } catch (err) {
-      console.error('Could not read the current user from storage:', err);
-      return false;
-    }
-  }
-
   // ---- Storage ----
-  function loadDecks() {
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      const parsed = raw ? JSON.parse(raw) : [];
-      return Array.isArray(parsed) ? parsed : [];
-    } catch (err) {
-      console.error('Could not read decks from storage:', err);
-      return [];
-    }
-  }
-
   function writeDecks(list) {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
@@ -109,14 +87,13 @@
   // Decks saved before cards had ids have none. Each such card gets one here,
   // matched to the saved card at the same position with the same question
   // (the only way left to tell them apart), and it is saved once. Create Deck
-  // gives every card an id from then on. The id format is the same as
-  // makeCardId in create-deck.js. The pages share no JS file, so keep the two
-  // in sync by hand.
+  // gives every card an id from then on. Both pages build the id with
+  // makeCardId() from shared.js, so the format is the same.
   function giveCardsIds() {
     let missing = false;
     deck.cards.forEach((card, i) => {
       if (!card.id) {
-        card.id = 'card_' + Date.now() + '_' + i + '_' + Math.floor(Math.random() * 10000);
+        card.id = makeCardId(i);
         missing = true;
       }
     });

@@ -1,7 +1,9 @@
 // my-decks.js — logic ONLY for my-decks.html
 // Decks are stored in localStorage for now (no backend yet).
-// Swap `loadDecks` / `saveDecks` for real API calls once one exists —
-// everything else (rendering, modal, events) stays the same.
+// Swap `loadDecks` (in shared.js) / `saveDecks` for real API calls once one
+// exists — everything else (rendering, modal, events) stays the same.
+// STORAGE_KEY, USER_KEY, isLoggedIn() and loadDecks() come from shared.js,
+// which my-decks.html loads first.
 //
 // Decks are created on the Create Deck page (create-deck.js), which saves
 // into the same "memora_decks" list, and edits them (title and cards) via
@@ -15,9 +17,6 @@
 
 'use strict';
 
-const STORAGE_KEY = 'memora_decks';
-const USER_KEY = 'currentUser'; // written by login.js
-
 const headerAction = document.getElementById('mydecksHeaderAction');
 const content = document.getElementById('mydecksContent');
 const modalRoot = document.getElementById('mydecksModalRoot');
@@ -29,16 +28,7 @@ const pageMain = document.querySelector('.mydecks-main');
 // The deck the modal is currently about (null while the modal is closed).
 let activeDeckId = null;
 
-// ---- Login check ----
-function isLoggedIn() {
-  try {
-    return localStorage.getItem(USER_KEY) !== null;
-  } catch (err) {
-    console.error('Could not read the current user from storage:', err);
-    return false;
-  }
-}
-
+// ---- Login ----
 // Removes the logged-in user. The link's own href then takes the browser to
 // Home. The account and the decks stay saved.
 function logOut() {
@@ -50,17 +40,6 @@ function logOut() {
 }
 
 // ---- Storage ----
-function loadDecks() {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const decks = raw ? JSON.parse(raw) : [];
-    return Array.isArray(decks) ? decks : [];
-  } catch (err) {
-    console.error('Could not read decks from storage:', err);
-    return [];
-  }
-}
-
 function saveDecks(decks) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
