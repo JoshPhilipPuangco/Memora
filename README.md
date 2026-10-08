@@ -18,6 +18,8 @@ Memora is a free flashcard web app for college students who want a faster way to
 git clone https://github.com/JoshPhilipPuangco/Memora.git
 ```
 
+**To try it out:** follow the short walkthrough in [DEMO.md](DEMO.md). It has example sign-up values and two sample decks to copy into Create Deck.
+
 ## 3. Pages and features
 
 Memora has no backend. All data (the account, the logged-in user, and the decks) is saved in the browser's `localStorage`. The pages pass a deck to each other through the URL, for example `study-decks.html?deck=<id>`.
@@ -41,6 +43,8 @@ Memora/
 ├── login.js, create-deck.js, my-decks.js, study-decks.js (one JS file per interactive page)
 ├── assets/
 │   ├── Home-Page-Image.png (hero image on the Home page)
+│   ├── logo.png (Memora logo, shown in the nav bar)
+│   ├── favicon.png (browser tab icon)
 │   └── screenshots/ (README screenshots)
 └── .github/ (CODEOWNERS + GitHub Pages deploy workflow)
 ```
