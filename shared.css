@@ -162,11 +162,20 @@ img {
 }
 
 .nav-bar__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-tight);
   font-size: var(--font-size-heading);
   font-weight: var(--font-weight-heading);
   color: var(--text);
   text-decoration: none;
   transition: color var(--transition-fast);
+}
+
+/* Logo mark beside the "Memora" text. Decorative: the link text names it. */
+.nav-bar__logo-img {
+  width: 32px;
+  height: 32px;
 }
 
 .nav-bar__logo:hover {
