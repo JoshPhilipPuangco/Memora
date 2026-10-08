@@ -2,24 +2,22 @@
    Do not edit shared.css from this file. */
 
 .create-deck-title {
-    text-align: center;
-    margin: var(--space-standard) 0;
+  text-align: center;
+  margin: var(--space-standard) 0;
 }
 
-
-.create-deck-form{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    /* Matches the gap above the button row: card block margin (24px) + the
-       gap above (20px), so the row sits evenly between the cards and footer. */
-    padding-bottom: calc(var(--space-standard) + 20px);
+.create-deck-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* Matches the gap above the button row: card block margin (24px) + the
+     gap above (20px), so the row sits evenly between the cards and footer. */
+  padding-bottom: calc(var(--space-standard) + 20px);
 }
 
-
-.create-deck-form textarea{
-    min-height: 100px;
-    resize: vertical;
+.create-deck-form textarea {
+  min-height: 100px;
+  resize: vertical;
 }
 
 /* Field flagged by create-deck.js when it is left empty. The hover and focus
@@ -29,26 +27,26 @@
 .form-field input.is-invalid:hover,
 .form-field textarea.is-invalid:hover,
 .form-field input.is-invalid:focus,
-.form-field textarea.is-invalid:focus{
-    border-color: var(--error);
+.form-field textarea.is-invalid:focus {
+  border-color: var(--error);
 }
 
 /* The error line sits under the flagged field, so it is left-aligned and
    only as tall as its text (shared.css's .form-error is centered and reserves
    two lines for Log In / Sign Up). */
-.form-field .form-error{
-    min-height: 0;
-    justify-content: flex-start;
-    text-align: left;
+.form-field .form-error {
+  min-height: 0;
+  justify-content: flex-start;
+  text-align: left;
 }
 
 /* Remove Card is added by create-deck.js as a direct child of the card block
    (a flex column), so it would stretch full width. Keep its natural width. */
-.card-block .remove-card{
-    align-self: flex-start;
+.card-block .remove-card {
+  align-self: flex-start;
 }
 
 /* A deck needs at least one card, so a lone card has nothing to remove. */
-.card-block:only-child .remove-card{
-    display: none;
+.card-block:only-child .remove-card {
+  display: none;
 }

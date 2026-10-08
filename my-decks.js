@@ -1,8 +1,8 @@
 // my-decks.js — logic ONLY for my-decks.html
 // Decks are stored in localStorage for now (no backend yet).
-// Swap `loadDecks` (in shared.js) / `saveDecks` for real API calls once one
-// exists — everything else (rendering, modal, events) stays the same.
-// STORAGE_KEY, USER_KEY, isLoggedIn() and loadDecks() come from shared.js,
+// Swap `loadDecks` / `saveDecks` (both in shared.js) for real API calls once
+// one exists — everything else (rendering, modal, events) stays the same.
+// USER_KEY, isLoggedIn(), loadDecks() and saveDecks() come from shared.js,
 // which my-decks.html loads first.
 //
 // Decks are created on the Create Deck page (create-deck.js), which saves
@@ -36,15 +36,6 @@ function logOut() {
     localStorage.removeItem(USER_KEY);
   } catch (err) {
     console.error('Could not clear the current user from storage:', err);
-  }
-}
-
-// ---- Storage ----
-function saveDecks(decks) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
-  } catch (err) {
-    console.error('Could not save decks to storage:', err);
   }
 }
 
