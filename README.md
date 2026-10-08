@@ -46,7 +46,11 @@ Memora/
 │   ├── logo.png (Memora logo, shown in the nav bar)
 │   ├── favicon.png (browser tab icon)
 │   └── screenshots/ (README screenshots)
-└── .github/ (CODEOWNERS + GitHub Pages deploy workflow)
+├── .github/ (CODEOWNERS + GitHub Pages deploy workflow)
+├── README.md (this file) + DEMO.md (demo walkthrough) + AI-USAGE.md (how we used AI)
+├── compiled-increment-report.md, compiled-increment-report-week-2.md (weekly group increment reports)
+├── .nojekyll (tells GitHub Pages to serve the files as they are, without running Jekyll)
+└── .gitignore (keeps .DS_Store files out of the repository)
 ```
 
 Each page loads `shared.css` plus its own page-specific CSS file. Each interactive page also loads `shared.js` before its own JavaScript file. `shared.js` holds the storage keys, the login check (`isLoggedIn()`), the deck loader and saver (`loadDecks()` and `saveDecks()`), and the card ID builder (`makeCardId()`), which the page files used to repeat.
