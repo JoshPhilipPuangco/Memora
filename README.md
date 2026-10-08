@@ -67,19 +67,7 @@ Each page loads `shared.css` plus its own page-specific CSS file. Each interacti
 
 ## 6. Known issues and next steps
 
-Found in a final review of the live site against the Final Project rubric. Each issue is fixed in a separate pull request, grouped into sessions below.
-
-| #   | Issue                                                                                                                                                                                                                                                                                         | Where        | Severity |
-| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | -------- |
-| 18  | The password fields on Log In and Sign Up have no `autocomplete` attribute, so a password manager cannot tell a login field from a new-password field. Fix: add `autocomplete="current-password"` to the Log In password field and `autocomplete="new-password"` to the Sign Up password field. | `login.html` | Low      |
-
-### Fix sessions
-
-Each session is one branch and one pull request.
-
-| Session | Issues | Theme                     | Files        |
-| ------- | ------ | ------------------------- | ------------ |
-| 10      | 18     | Password autocomplete     | `login.html` |
+No known issues at the moment.
 
 ## AI use
 
