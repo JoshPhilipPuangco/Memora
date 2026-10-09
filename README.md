@@ -71,6 +71,6 @@ No known issues at the moment.
 
 ## AI use
 
-Most of Memora's code was written with AI assistance, using Claude Code, Claude (web chat), and ChatGPT. The Home page image was generated with Gemini. The team reviewed, tested, and changed that code by hand.
+Most of Memora's code was written with AI assistance, using Claude Code, Claude (web chat), and ChatGPT. The Home page image was generated with Gemini. The logo and favicon were made with Claude Code. The team reviewed, tested, and changed that code by hand.
 
 See [AI-USAGE.md](AI-USAGE.md) for the full account: how we used AI, where it got things wrong, and who wrote what, including which parts each member wrote by hand.
